@@ -9,13 +9,25 @@ set(
   idemainwindow_src
   "main.cpp"
 
+  "idemainwindow/bottom_panel.hpp"
+  "idemainwindow/bottom_panel.cpp"
+  "idemainwindow/editors_area.hpp"
+  "idemainwindow/editors_area.cpp"
   "idemainwindow/ide_mainwindow.hpp"
   "idemainwindow/ide_mainwindow.cpp"
+  "idemainwindow/side_panel.hpp"
+  "idemainwindow/side_panel.cpp"
+  "idemainwindow/side_panel_item.hpp"
+  "idemainwindow/side_panel_item.cpp"
 )
 
 set(
   idemainwindow_moc_header
+  "idemainwindow/bottom_panel.hpp"
+  "idemainwindow/editors_area.hpp"
   "idemainwindow/ide_mainwindow.hpp"
+  "idemainwindow/side_panel.hpp"
+  "idemainwindow/side_panel_item.hpp"
 )
 
 qt4_wrap_cpp(
