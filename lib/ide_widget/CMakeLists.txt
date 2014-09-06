@@ -11,6 +11,7 @@ set(
   "ide_widget/closable_widget.hpp"
   "ide_widget/closable_widget_element.hpp"
   "ide_widget/closable_widget_event.hpp"
+  "ide_widget/enum.hpp"
   "ide_widget/open_file_chooser.hpp"
   "ide_widget/open_file_chooser_model.hpp"
   "ide_widget/splitter.hpp"
