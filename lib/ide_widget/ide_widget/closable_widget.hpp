@@ -26,8 +26,8 @@ public:
   void setWSplitEnable(bool enable);
 
   QWidget* widget() const;
-  void setWidget(QWidget* widget, bool takeOwnership = false);
-  void setWidget(ClosableWidgetElement* widget, bool takeOwnership = false);
+  void setWidget(QWidget* widget, bool deleteOld = false);
+  void setWidget(ClosableWidgetElement* widget, bool deleteOld = false);
 
   void addToolBarAction(QAction* action);
 
@@ -45,7 +45,6 @@ private:
 
   QVBoxLayout* _layout;
   QWidget* _widget;
-  bool _hasOwnership;
 
   QAction* _vSplitAction;
   QAction* _hSplitAction;

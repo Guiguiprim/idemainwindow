@@ -19,7 +19,6 @@ ClosableWidget::ClosableWidget(
   , _toolBarEnd(new QToolBar)
   , _layout(new QVBoxLayout(this))
   , _widget(new QWidget)
-  , _hasOwnership(true)
   , _vSplitAction(NULL)
   , _hSplitAction(NULL)
   , _wSplitAction(NULL)
@@ -82,12 +81,7 @@ ClosableWidget::ClosableWidget(
 }
 
 ClosableWidget::~ClosableWidget()
-{
-  if(_hasOwnership)
-    delete _widget;
-  else
-    _widget->setParent(NULL);
-}
+{}
 
 bool ClosableWidget::isVSplitEnable() const
 {
@@ -124,23 +118,22 @@ QWidget* ClosableWidget::widget() const
   return _widget;
 }
 
-void ClosableWidget::setWidget(QWidget* widget, bool takeOwnership)
+void ClosableWidget::setWidget(QWidget* widget, bool deleteOld)
 {
   if(_widget == widget)
     return;
 
   _layout->removeWidget(_widget);
-  if(_hasOwnership)
+  if(deleteOld)
     delete _widget;
 
   _layout->addWidget(_widget);
-  _hasOwnership = takeOwnership;
+  _toolBar->clear();
 }
 
-void ClosableWidget::setWidget(ClosableWidgetElement* widget, bool takeOwnership)
+void ClosableWidget::setWidget(ClosableWidgetElement* widget, bool deleteOld)
 {
-  setWidget(static_cast<QWidget*>(widget), takeOwnership);
-  _toolBar->clear();
+  setWidget(static_cast<QWidget*>(widget), deleteOld);
   _toolBar->addActions(widget->attachActions());
 }
 
