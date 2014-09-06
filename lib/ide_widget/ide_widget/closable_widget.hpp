@@ -4,7 +4,9 @@
 #include <QWidget>
 
 class QHBoxLayout;
+class QMenu;
 class QToolBar;
+class QToolButton;
 class QVBoxLayout;
 
 namespace IDE
@@ -31,11 +33,8 @@ public:
 
   void addToolBarAction(QAction* action);
 
-Q_SIGNALS:
-  void closeTriggered();
-  void vSplitTriggered();
-  void hSplitTriggered();
-  void wSplitTriggered();
+private Q_SLOTS:
+  void emitEvent();
 
 private:
   QHBoxLayout* _toolBarLayout;
@@ -46,9 +45,13 @@ private:
   QVBoxLayout* _layout;
   QWidget* _widget;
 
+  QAction* _close;
+  QAction* _unsplitAction;
   QAction* _vSplitAction;
   QAction* _hSplitAction;
-  QAction* _wSplitAction;
+  QAction* _newWindowAction;
+  QToolButton* _toolButton;
+  QMenu* _splitMenu;
 };
 
 } // namespace IDE

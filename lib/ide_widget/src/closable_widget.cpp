@@ -1,12 +1,16 @@
 #include <ide_widget/closable_widget.hpp>
 
 #include <QAction>
+#include <QApplication>
 #include <QHBoxLayout>
+#include <QMenu>
+#include <QToolButton>
 #include <QToolBar>
 #include <QStyle>
 #include <QVBoxLayout>
 
 #include <ide_widget/closable_widget_element.hpp>
+#include <ide_widget/closable_widget_event.hpp>
 
 namespace IDE
 {
@@ -19,9 +23,13 @@ ClosableWidget::ClosableWidget(
   , _toolBarEnd(new QToolBar)
   , _layout(new QVBoxLayout(this))
   , _widget(new QWidget)
+  , _close(NULL)
+  , _unsplitAction(NULL)
   , _vSplitAction(NULL)
   , _hSplitAction(NULL)
-  , _wSplitAction(NULL)
+  , _newWindowAction(NULL)
+  , _toolButton(NULL)
+  , _splitMenu(NULL)
 {
   _layout->setMargin(0);
   _layout->setSpacing(0);
@@ -45,39 +53,45 @@ ClosableWidget::ClosableWidget(
                              "color: darkgray;"
                              "}");
 
-  QAction* close = new QAction(this->style()->standardIcon(QStyle::SP_TitleBarCloseButton),
-                               "Close", this);
-  connect(close, SIGNAL(triggered()),
-          this, SIGNAL(closeTriggered()));
+  _close = new QAction(this->style()->standardIcon(QStyle::SP_TitleBarCloseButton),
+                       "Close", this);
 
   _vSplitAction = new QAction(
                     this->style()->standardIcon(QStyle::SP_ToolBarVerticalExtensionButton),
                     "Vertical split", this);
-  connect(_vSplitAction, SIGNAL(triggered()),
-          this, SIGNAL(vSplitTriggered()));
 
   _hSplitAction = new QAction(
                     this->style()->standardIcon(QStyle::SP_ToolBarHorizontalExtensionButton),
                     "Horizontal split", this);
-  connect(_hSplitAction, SIGNAL(triggered()),
-          this, SIGNAL(hSplitTriggered()));
 
-  _wSplitAction = new QAction(
+  _newWindowAction = new QAction(
                     this->style()->standardIcon(QStyle::SP_TitleBarMaxButton),
                     "Open in a new window", this);
-  connect(_wSplitAction, SIGNAL(triggered()),
-          this, SIGNAL(wSplitTriggered()));
+
+  _unsplitAction = new QAction(
+                     this->style()->standardIcon(QStyle::SP_TitleBarMaxButton),
+                     "Unsplit", this);
+
+  _splitMenu = new QMenu("test");
+  _splitMenu->addAction(_vSplitAction);
+  _splitMenu->addAction(_hSplitAction);
+  _splitMenu->addAction(_newWindowAction);
+  _toolButton = new QToolButton;
+  _toolButton->setMenu(_splitMenu);
+  _toolButton->setPopupMode(QToolButton::InstantPopup);
 
   QWidget* w = new QWidget;
   w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   _toolBarEnd->addWidget(w);
-  _toolBarEnd->addAction(_vSplitAction);
-  _toolBarEnd->addAction(_hSplitAction);
-  _toolBarEnd->addAction(_wSplitAction);
-  _toolBarEnd->addAction(close);
+  _toolBarEnd->addWidget(_toolButton);
+  _toolBarEnd->addAction(_unsplitAction);
+  _toolBarEnd->addAction(_close);
 
-  _vSplitAction->setVisible(false);
-  _hSplitAction->setVisible(false);
+  connect(_close, SIGNAL(triggered()), SLOT(emitEvent()));
+  connect(_unsplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
+  connect(_vSplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
+  connect(_hSplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
+  connect(_newWindowAction, SIGNAL(triggered()), SLOT(emitEvent()));
 }
 
 ClosableWidget::~ClosableWidget()
@@ -95,7 +109,7 @@ bool ClosableWidget::isHSplitEnable() const
 
 bool ClosableWidget::isWSplitEnable() const
 {
-  return _wSplitAction->isVisible();
+  return _newWindowAction->isVisible();
 }
 
 void ClosableWidget::setVSplitEnable(bool enable)
@@ -110,7 +124,7 @@ void ClosableWidget::setHSplitEnable(bool enable)
 
 void ClosableWidget::setWSplitEnable(bool enable)
 {
-  _wSplitAction->setVisible(enable);
+  _newWindowAction->setVisible(enable);
 }
 
 QWidget* ClosableWidget::widget() const
@@ -140,6 +154,36 @@ void ClosableWidget::setWidget(ClosableWidgetElement* widget, bool deleteOld)
 void ClosableWidget::addToolBarAction(QAction* action)
 {
   _toolBar->addAction(action);
+}
+
+void ClosableWidget::emitEvent()
+{
+  QObject* action = sender();
+  if(action == _close)
+  {
+    ClosableWidgetEvent event(ClosableWidgetEvent::Close);
+    QApplication::sendEvent(this, &event);
+  }
+  else if(action == _unsplitAction)
+  {
+    ClosableWidgetEvent event(ClosableWidgetEvent::Unsplit);
+    QApplication::sendEvent(this, &event);
+  }
+  else if(action == _vSplitAction)
+  {
+    ClosableWidgetEvent event(ClosableWidgetEvent::VerticalSplit);
+    QApplication::sendEvent(this, &event);
+  }
+  else if(action == _hSplitAction)
+  {
+    ClosableWidgetEvent event(ClosableWidgetEvent::HorizontalSplit);
+    QApplication::sendEvent(this, &event);
+  }
+  else if(action == _newWindowAction)
+  {
+    ClosableWidgetEvent event(ClosableWidgetEvent::NewWindow);
+    QApplication::sendEvent(this, &event);
+  }
 }
 
 } // namespace IDE
