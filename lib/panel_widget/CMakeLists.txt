@@ -16,10 +16,21 @@ set(
   "src/panel_widget.cpp"
 )
 
+set(
+  panel_widget_public_moc_header
+  "panel_widget/panel_widget.hpp"
+)
+
+qt4_wrap_cpp(
+  panel_widget_public_moc_src
+  ${panel_widget_public_moc_header}
+)
+
 qi_create_lib(
   panel_widget
   ${panel_widget_public_header}
   ${panel_widget_src}
+  ${panel_widget_public_moc_src}
   STATIC
 )	
 

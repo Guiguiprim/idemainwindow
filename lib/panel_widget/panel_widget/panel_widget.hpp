@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+#include <QList>
+
+class QAction;
+
 namespace IDE
 {
 
@@ -10,8 +14,17 @@ class PanelWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit PanelWidget(QWidget *parent = NULL);
+  explicit PanelWidget(const QString& panelName, QWidget *parent = NULL);
 
+  QString panelName() const;
+
+  QList<QAction*> attachActions() const;
+  void addAttachAction(QAction* action);
+  void removeAttachAction(QAction* action);
+
+private:
+  QString _panelName;
+  QList<QAction*> _attachActions;
 };
 
 } // namespace IDE
