@@ -10,6 +10,7 @@ set(
   ide_widget_public_header
   "ide_widget/closable_widget.hpp"
   "ide_widget/closable_widget_element.hpp"
+  "ide_widget/closable_widget_event.hpp"
   "ide_widget/open_file_chooser.hpp"
   "ide_widget/open_file_chooser_model.hpp"
   "ide_widget/splitter.hpp"
@@ -21,6 +22,7 @@ set(
   ide_widget_src
   "src/closable_widget.cpp"
   "src/closable_widget_element.cpp"
+  "src/closable_widget_event.cpp"
   "src/open_file_chooser.cpp"
   "src/open_file_chooser_model.cpp"
   "src/splitter.cpp"
