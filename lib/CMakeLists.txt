@@ -3,4 +3,5 @@ find_package(qibuild)
 
 add_subdirectory("editor")
 add_subdirectory("panel_widget")
+add_subdirectory("ide_widget")
 
