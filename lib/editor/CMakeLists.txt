@@ -10,6 +10,7 @@ set(
   editor_public_header
   "editor/editor_interface.hpp"
   "editor/editor_widget.hpp"
+  "editor/editor_widget_interface.hpp"
 )
 
 set(
@@ -18,10 +19,21 @@ set(
   "src/editor_widget.cpp"
 )
 
+set(
+  editor_public_moc_header
+  "editor/editor_widget.hpp"
+)
+
+qt4_wrap_cpp(
+  editor_public_moc_src
+  ${editor_public_moc_header}
+)
+
 qi_create_lib(
   editor
   ${editor_public_header}
   ${editor_src}
+  ${editor_public_moc_src}
   STATIC
 )	
 
@@ -29,6 +41,7 @@ qi_use_lib(
   editor
   QT_QTCORE
   QT_QTGUI
+  BOOST
 )
 
 qi_stage_lib(editor)
