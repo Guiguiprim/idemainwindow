@@ -1,0 +1,10 @@
+<project version="3">
+    <maintainer email="guilhem.vallat@gmail.com">Guilhem Vallat</maintainer>
+
+  <qibuild name="idemainwindow">
+    <!-- Add your project dependencies here
+    <depends buildtime="true" runtime="true" names="foo" />
+    -->
+ </qibuild>
+
+</project>
