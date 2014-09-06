@@ -1,11 +1,21 @@
 #include "side_panel.hpp"
 
+#include <QVBoxLayout>
+
+#include <ide_widget/closable_widget.hpp>
+
 namespace IDE
 {
 
 SidePanel::SidePanel(QWidget *parent)
   : QWidget(parent)
 {
+  QVBoxLayout* lyt = new QVBoxLayout(this);
+  lyt->setMargin(0);
+  lyt->setSpacing(0);
+
+  ClosableWidget* widget = new ClosableWidget;
+  lyt->addWidget(widget);
 }
 
 } // namespace IDE
