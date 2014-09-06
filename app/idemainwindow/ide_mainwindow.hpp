@@ -5,6 +5,9 @@
 
 namespace IDE
 {
+class BottomPanel;
+class SidePanel;
+class EditorsArea;
 
 class IDEMainWindow : public QMainWindow
 {
@@ -12,6 +15,11 @@ class IDEMainWindow : public QMainWindow
 public:
   explicit IDEMainWindow(QWidget *parent = NULL);
 
+private:
+  EditorsArea* _editorsArea;
+  SidePanel* _leftPanel;
+  SidePanel* _rightPanel;
+  BottomPanel* _bottomPanel;
 };
 
 } // namespace IDE

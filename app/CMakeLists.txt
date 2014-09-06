@@ -44,6 +44,7 @@ qi_create_bin(
   QT_QTGUI
   editor
   panel_widget
+  ide_widget
 )
 
 # Add a simple test:
