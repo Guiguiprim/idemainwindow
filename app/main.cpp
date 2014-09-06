@@ -1,7 +1,14 @@
-#include <iostream>
+#include <QApplication>
 
-int main()
+#include "idemainwindow/ide_mainwindow.hpp"
+
+int main(int argc, char* argv[])
 {
-  std::cout << "Hello, world" << std::endl;
-  return 0;
+  QApplication app(argc, argv);
+
+  IDE::IDEMainWindow window;
+  window.setWindowTitle("My IDE");
+  window.show();
+
+  return app.exec();
 }
