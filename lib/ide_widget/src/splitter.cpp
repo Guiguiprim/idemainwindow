@@ -9,14 +9,15 @@ namespace IDE
 SplitterHandle::SplitterHandle(Qt::Orientation orientation, QSplitter* parent)
   : QSplitterHandle(orientation, parent)
 {
-  _gradient.setColorAt(0, QColor(150,150,150));
-  _gradient.setColorAt(1, QColor(50,50,50));
+  _gradient.setColorAt(0, QColor(200,200,200));
+  _gradient.setColorAt(0.5, QColor(50,50,50));
+  _gradient.setColorAt(1, QColor(200,200,200));
 }
 
 void SplitterHandle::paintEvent(QPaintEvent *event)
 {
   QPainter painter(this);
-  if (orientation() == Qt::Horizontal) {
+  if (orientation() == Qt::Vertical) {
       _gradient.setStart(rect().left(), rect().height()/2);
       _gradient.setFinalStop(rect().right(), rect().height()/2);
   } else {
@@ -28,7 +29,9 @@ void SplitterHandle::paintEvent(QPaintEvent *event)
 
 Splitter::Splitter(Qt::Orientation orientation, QWidget *parent)
   : QSplitter(orientation, parent)
-{}
+{
+  this->setHandleWidth(2);
+}
 
 QSplitterHandle* Splitter::createHandle()
 {

@@ -3,7 +3,6 @@
 
 #include <QLinearGradient>
 #include <QSplitter>
-#include <QSplitterHandle>
 
 namespace IDE
 {
