@@ -8,13 +8,13 @@ include_directories(".")
 
 set(
   editor_public_header
-  "editor/editor.hpp"
+  "editor/editor_interface.hpp"
   "editor/editor_widget.hpp"
 )
 
 set(
   editor_src
-  "src/editor.cpp"
+  "src/editor_interface.cpp"
   "src/editor_widget.cpp"
 )
 
