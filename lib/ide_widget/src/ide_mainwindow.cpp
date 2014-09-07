@@ -1,9 +1,12 @@
 #include <ide_widget/ide_mainwindow.hpp>
 
-#include <ide_widget/commun/splitter.hpp>
-#include <ide_widget/commun/closable_widget.hpp>
+#include <QAction>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 #include <ide_widget/bottom_panel/bottom_panel.hpp>
+#include <ide_widget/commun/splitter.hpp>
+#include <ide_widget/commun/closable_widget.hpp>
 #include <ide_widget/editor/recursive_splitter.hpp>
 #include <ide_widget/side_panel/side_panel.hpp>
 
@@ -16,6 +19,10 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   , _leftPanel(new SidePanel)
   , _rightPanel(new SidePanel)
   , _bottomPanel(new BottomPanel)
+  , _bottomToolBar(NULL)
+  , _leftVisibilityAction(NULL)
+  , _rightVisibilityAction(NULL)
+  , _bottomVisibilityAction(NULL)
 {
   this->resize(800,600);
 
@@ -34,7 +41,46 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   _leftPanel->hide();
   _rightPanel->hide();
 
-  this->setCentralWidget(globalSplitter);
+  _bottomToolBar = new QToolBar;
+  _bottomToolBar->setObjectName("DarkToolBar");
+
+  _leftVisibilityAction = _bottomToolBar->addAction("Hide left panel", this, SLOT(xChangeLeftVisibility()));
+
+  QWidget* s = new QWidget;
+  s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  _bottomToolBar->addWidget(s);
+
+  _bottomVisibilityAction = _bottomToolBar->addAction("Hide bottom panel", this, SLOT(xChangeBottomVisibility()));
+
+  s = new QWidget;
+  s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  _bottomToolBar->addWidget(s);
+
+  _rightVisibilityAction = _bottomToolBar->addAction("Hide right panel", this, SLOT(xChangeRightVisibility()));
+
+  QWidget* w = new QWidget;
+  QVBoxLayout* lyt = new QVBoxLayout(w);
+  lyt->setMargin(0);
+  lyt->setSpacing(0);
+  lyt->addWidget(globalSplitter);
+  lyt->addWidget(_bottomToolBar);
+
+  this->setCentralWidget(w);
+}
+
+void IDEMainWindow::xChangeLeftVisibility()
+{
+  _leftPanel->setVisible(!_leftPanel->isVisible());
+}
+
+void IDEMainWindow::xChangeRightVisibility()
+{
+  _rightPanel->setVisible(!_rightPanel->isVisible());
+}
+
+void IDEMainWindow::xChangeBottomVisibility()
+{
+  _bottomPanel->setVisible(!_bottomPanel->isVisible());
 }
 
 } // namespace IDE
