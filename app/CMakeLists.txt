@@ -9,25 +9,13 @@ set(
   idemainwindow_src
   "main.cpp"
 
-  "idemainwindow/bottom_panel.hpp"
-  "idemainwindow/bottom_panel.cpp"
-  "idemainwindow/editors_area.hpp"
-  "idemainwindow/editors_area.cpp"
-  "idemainwindow/ide_mainwindow.hpp"
-  "idemainwindow/ide_mainwindow.cpp"
-  "idemainwindow/side_panel.hpp"
-  "idemainwindow/side_panel.cpp"
-  "idemainwindow/side_panel_item.hpp"
-  "idemainwindow/side_panel_item.cpp"
+  "my_ide_mainwindow.hpp"
+  "my_ide_mainwindow.cpp"
 )
 
 set(
   idemainwindow_moc_header
-  "idemainwindow/bottom_panel.hpp"
-  "idemainwindow/editors_area.hpp"
-  "idemainwindow/ide_mainwindow.hpp"
-  "idemainwindow/side_panel.hpp"
-  "idemainwindow/side_panel_item.hpp"
+  "my_ide_mainwindow.hpp"
 )
 
 qt4_wrap_cpp(
@@ -42,8 +30,6 @@ qi_create_bin(
   DEPENDS
   QT_QTCORE
   QT_QTGUI
-  editor
-  panel_widget
   ide_widget
 )
 

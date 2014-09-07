@@ -9,41 +9,68 @@ add_definitions(-DIDE_WIDGET_LIBRARY)
 
 set(
   ide_widget_public_header
-  "ide_widget/closable_widget.hpp"
-  "ide_widget/closable_widget_element.hpp"
-  "ide_widget/closable_widget_event.hpp"
   "ide_widget/enum.hpp"
-  "ide_widget/open_file_chooser.hpp"
-  "ide_widget/open_file_chooser_model.hpp"
-  "ide_widget/recursive_splitter.hpp"
-  "ide_widget/splitter.hpp"
-  "ide_widget/widget_chooser.hpp"
-  "ide_widget/widget_chooser_model.hpp"
+  "ide_widget/ide_mainwindow.hpp"
+
+  "ide_widget/bottom_panel/bottom_panel.hpp"
+
+  "ide_widget/commun/closable_widget.hpp"
+  "ide_widget/commun/closable_widget_element.hpp"
+  "ide_widget/commun/closable_widget_event.hpp"
+  "ide_widget/commun/splitter.hpp"
+
+  "ide_widget/editor/editor_interface.hpp"
+  "ide_widget/editor/editor_widget.hpp"
+  "ide_widget/editor/editor_widget_interface.hpp"
+  "ide_widget/editor/open_file_chooser.hpp"
+  "ide_widget/editor/open_file_chooser_model.hpp"
+  "ide_widget/editor/recursive_splitter.hpp"
+
+  "ide_widget/side_panel/side_panel.hpp"
+  "ide_widget/side_panel/widget_chooser.hpp"
+  "ide_widget/side_panel/widget_chooser_model.hpp"
 )
 
 set(
   ide_widget_src
-  "src/closable_widget.cpp"
-  "src/closable_widget_element.cpp"
-  "src/closable_widget_event.cpp"
-  "src/open_file_chooser.cpp"
-  "src/open_file_chooser_model.cpp"
-  "src/recursive_splitter.cpp"
-  "src/splitter.cpp"
-  "src/widget_chooser.cpp"
-  "src/widget_chooser_model.cpp"
+  "src/ide_mainwindow.cpp"
+
+  "src/bottom_panel/bottom_panel.cpp"
+
+  "src/commun/closable_widget.cpp"
+  "src/commun/closable_widget_element.cpp"
+  "src/commun/closable_widget_event.cpp"
+  "src/commun/splitter.cpp"
+
+  "src/editor/editor_interface.cpp"
+  "src/editor/editor_widget.cpp"
+  "src/editor/open_file_chooser.cpp"
+  "src/editor/open_file_chooser_model.cpp"
+  "src/editor/recursive_splitter.cpp"
+
+  "src/side_panel/side_panel.cpp"
+  "src/side_panel/widget_chooser.cpp"
+  "src/side_panel/widget_chooser_model.cpp"
 )
 
 set(
   ide_widget_public_moc_header
-  "ide_widget/closable_widget.hpp"
-  "ide_widget/closable_widget_element.hpp"
-  "ide_widget/open_file_chooser.hpp"
-  "ide_widget/open_file_chooser_model.hpp"
-  "ide_widget/recursive_splitter.hpp"
-  "ide_widget/splitter.hpp"
-  "ide_widget/widget_chooser.hpp"
-  "ide_widget/widget_chooser_model.hpp"
+  "ide_widget/ide_mainwindow.hpp"
+
+  "ide_widget/bottom_panel/bottom_panel.hpp"
+
+  "ide_widget/commun/closable_widget.hpp"
+  "ide_widget/commun/closable_widget_element.hpp"
+
+  "ide_widget/editor/editor_interface.hpp"
+  "ide_widget/editor/editor_widget.hpp"
+  "ide_widget/editor/open_file_chooser.hpp"
+  "ide_widget/editor/open_file_chooser_model.hpp"
+  "ide_widget/editor/recursive_splitter.hpp"
+
+  "ide_widget/side_panel/side_panel.hpp"
+  "ide_widget/side_panel/widget_chooser.hpp"
+  "ide_widget/side_panel/widget_chooser_model.hpp"
 )
 
 qt4_wrap_cpp(

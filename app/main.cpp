@@ -1,12 +1,12 @@
 #include <QApplication>
 
-#include "idemainwindow/ide_mainwindow.hpp"
+#include "my_ide_mainwindow.hpp"
 
 int main(int argc, char* argv[])
 {
   QApplication app(argc, argv);
 
-  IDE::IDEMainWindow window;
+  IDE::MyIdeMainWindow window;
   window.setWindowTitle("My IDE");
   window.show();
 
