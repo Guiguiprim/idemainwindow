@@ -13,12 +13,15 @@ set(
   "my_ide_mainwindow.cpp"
   "controller/editors_controller.hpp"
   "controller/editors_controller.cpp"
+  "controller/side_panel_controller.hpp"
+  "controller/side_panel_controller.cpp"
 )
 
 set(
   idemainwindow_moc_header
   "my_ide_mainwindow.hpp"
   "controller/editors_controller.hpp"
+  "controller/side_panel_controller.hpp"
 )
 
 qt4_wrap_cpp(
