@@ -6,6 +6,7 @@
 namespace IDE
 {
 class EditorsController;
+class SidePanelController;
 
 class MyIdeMainWindow : public IDEMainWindow
 {
@@ -15,6 +16,8 @@ public:
 
 private:
   EditorsController* _editorsController;
+  SidePanelController* _leftPanelController;
+  SidePanelController* _rightPanelController;
 };
 
 } // namespace IDE
