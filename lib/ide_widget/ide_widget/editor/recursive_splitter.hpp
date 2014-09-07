@@ -23,10 +23,6 @@ public:
       const Qt::Orientation orientation,
       QWidget *parent = NULL);
 
-  virtual bool eventFilter(
-      QObject* watched,
-      QEvent* event);
-
   bool addWidget(
       ClosableWidget* widget,
       const Qt::Orientation orientation = Qt::Horizontal,

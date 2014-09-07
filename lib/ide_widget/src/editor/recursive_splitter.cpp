@@ -19,59 +19,6 @@ RecursiveSplitter::RecursiveSplitter(
   : Splitter(orientation, parent)
 {}
 
-bool RecursiveSplitter::eventFilter(
-    QObject* watched,
-    QEvent* event)
-{
-  if(event->type() == ClosableWidgetEvent::type())
-  {
-    ClosableWidgetEvent* cwEvent = static_cast<ClosableWidgetEvent*>(event);
-    ClosableWidget* cw = dynamic_cast<ClosableWidget*>(watched);
-    if(cw)
-    {
-      if(cwEvent->requestedAction() == ClosableWidgetEvent::Unsplit)
-      {
-        if(this->count() > 1)
-          if(this->removeWidget(cw))
-            delete cw;
-      }
-      else if(cwEvent->requestedAction() == ClosableWidgetEvent::HorizontalSplit ||
-              cwEvent->requestedAction() == ClosableWidgetEvent::VerticalSplit)
-      {
-        Qt::Orientation orientation = Qt::Horizontal;
-        if(cwEvent->requestedAction() == ClosableWidgetEvent::VerticalSplit)
-          orientation = Qt::Vertical;
-        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
-        RecursiveIndex index = this->indexOf(cw);
-        if(this->insertWidget(index, cw2, orientation))
-        {
-          cw2->installEventFilter(this);
-        }
-        else
-        {
-          delete cw2;
-        }
-      }
-      else if(cwEvent->requestedAction() == ClosableWidgetEvent::NewWindow)
-      {
-        RecursiveSplitter* rs = new RecursiveSplitter;
-        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
-        rs->addWidget(cw2);
-        cw2->installEventFilter(rs);
-        rs->show();
-//        QDialog* dlg = new QDialog;
-//        QVBoxLayout* lyt = new QVBoxLayout(dlg);
-//        lyt->setMargin(0);
-//        lyt->addWidget(rs);
-//        dlg->show();
-      }
-    }
-    return true;
-  }
-  else
-    return QSplitter::eventFilter(watched, event);
-}
-
 bool RecursiveSplitter::addWidget(
     ClosableWidget* widget,
     const Qt::Orientation orientation,
