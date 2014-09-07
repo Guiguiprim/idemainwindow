@@ -157,6 +157,7 @@ void ClosableWidget::setWidget(QWidget* widget, bool deleteOld)
     disconnect(_widget, SIGNAL(destroyed(QObject*)), this, SLOT(xOnCurrentWidgetDestoyed()));
 
   _layout->removeWidget(_widget);
+  _widget->setParent(NULL);
   if(deleteOld && widget != _placeHolder)
     delete _widget;
 
@@ -220,7 +221,9 @@ void ClosableWidget::xEmitEvent()
 
 void ClosableWidget::xOnCurrentWidgetDestoyed()
 {
-  clearWidget();
+  _widget = _placeHolder;
+  _layout->addWidget(_widget);
+  _toolBar->clear();
 }
 
 } // namespace IDE
