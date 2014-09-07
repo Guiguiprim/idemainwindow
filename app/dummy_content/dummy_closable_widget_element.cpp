@@ -18,6 +18,7 @@ DCW1::DCW1(QWidget *parent)
   QWidget* w = new QWidget;
   w->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
   lyt->addWidget(w);
+  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 }
 
 DCW2::DCW2(QWidget *parent)
@@ -31,6 +32,7 @@ DCW2::DCW2(QWidget *parent)
   QWidget* w = new QWidget;
   w->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
   lyt->addWidget(w);
+  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 }
 
 DCW3::DCW3(QWidget *parent)
@@ -45,6 +47,7 @@ DCW3::DCW3(QWidget *parent)
   QWidget* w = new QWidget;
   w->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
   lyt->addWidget(w);
+  this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 }
 
 } // namespace IDE

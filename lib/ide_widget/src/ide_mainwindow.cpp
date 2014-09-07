@@ -33,12 +33,17 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   Splitter* centralSplitter = new Splitter(Qt::Vertical);
   centralSplitter->addWidget(_editorsArea);
   centralSplitter->addWidget(_bottomPanel);
+  centralSplitter->setStretchFactor(0,6);
+  centralSplitter->setStretchFactor(1,1);
   _bottomPanel->hide();
 
   Splitter* globalSplitter = new Splitter(Qt::Horizontal);
   globalSplitter->addWidget(_leftPanel);
   globalSplitter->addWidget(centralSplitter);
   globalSplitter->addWidget(_rightPanel);
+  globalSplitter->setStretchFactor(0,1);
+  globalSplitter->setStretchFactor(1,6);
+  globalSplitter->setStretchFactor(2,1);
   _leftPanel->hide();
   _rightPanel->hide();
 
