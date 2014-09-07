@@ -9,6 +9,7 @@ class QToolBar;
 namespace IDE
 {
 class BottomPanel;
+class BottomPanelChooser;
 class SidePanel;
 class RecursiveSplitter;
 typedef RecursiveSplitter EditorsArea;
@@ -34,6 +35,8 @@ protected:
   QAction* _leftVisibilityAction;
   QAction* _rightVisibilityAction;
   QAction* _bottomVisibilityAction;
+
+  BottomPanelChooser* _bottomPanelChooser;
 };
 
 } // namespace IDE

@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 
 #include <ide_widget/bottom_panel/bottom_panel.hpp>
+#include <ide_widget/bottom_panel/bottom_panel_chooser.hpp>
 #include <ide_widget/commun/splitter.hpp>
 #include <ide_widget/commun/closable_widget.hpp>
 #include <ide_widget/editor/recursive_splitter.hpp>
@@ -23,6 +24,7 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   , _leftVisibilityAction(NULL)
   , _rightVisibilityAction(NULL)
   , _bottomVisibilityAction(NULL)
+  , _bottomPanelChooser(NULL)
 {
   this->resize(800,600);
 
@@ -41,6 +43,8 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   _leftPanel->hide();
   _rightPanel->hide();
 
+  _bottomPanelChooser = new BottomPanelChooser(_bottomPanel);
+
   _bottomToolBar = new QToolBar;
   _bottomToolBar->setIconSize(QSize(16,16));
   _bottomToolBar->setObjectName("DarkToolBar");
@@ -54,6 +58,8 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
 
   _bottomVisibilityAction = _bottomToolBar->addAction(QIcon(":/icons/bottom_hide.svg"), "Show bottom panel",
                                                       this, SLOT(xChangeBottomVisibility()));
+
+  _bottomToolBar->addWidget(_bottomPanelChooser);
 
   s = new QWidget;
   s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
