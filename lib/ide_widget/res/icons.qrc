@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/bottom_fold.svg</file>
+        <file>icons/bottom_hide.svg</file>
+        <file>icons/close.svg</file>
+        <file>icons/left_fold.svg</file>
+        <file>icons/left_hide.svg</file>
+        <file>icons/right_fold.svg</file>
+        <file>icons/right_hide.svg</file>
+        <file>icons/top_fold.svg</file>
+        <file>icons/v_split.svg</file>
+        <file>icons/new_window.svg</file>
+        <file>icons/h_split.svg</file>
+    </qresource>
+</RCC>

@@ -78,11 +78,17 @@ qt4_wrap_cpp(
   ${ide_widget_public_moc_header}
 )
 
+qt4_add_resources(
+  ide_widget_res
+  "res/icons.qrc"
+)
+
 qi_create_lib(
   ide_widget
   ${ide_widget_public_header}
   ${ide_widget_src}
   ${ide_widget_public_moc_src}
+  ${ide_widget_res}
   SHARED
 )	
 

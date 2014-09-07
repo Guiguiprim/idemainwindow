@@ -42,21 +42,25 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   _rightPanel->hide();
 
   _bottomToolBar = new QToolBar;
+  _bottomToolBar->setIconSize(QSize(16,16));
   _bottomToolBar->setObjectName("DarkToolBar");
 
-  _leftVisibilityAction = _bottomToolBar->addAction("Hide left panel", this, SLOT(xChangeLeftVisibility()));
+  _leftVisibilityAction = _bottomToolBar->addAction(QIcon(":/icons/left_hide.svg"), "Show left panel",
+                                                    this, SLOT(xChangeLeftVisibility()));
 
   QWidget* s = new QWidget;
   s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   _bottomToolBar->addWidget(s);
 
-  _bottomVisibilityAction = _bottomToolBar->addAction("Hide bottom panel", this, SLOT(xChangeBottomVisibility()));
+  _bottomVisibilityAction = _bottomToolBar->addAction(QIcon(":/icons/bottom_hide.svg"), "Show bottom panel",
+                                                      this, SLOT(xChangeBottomVisibility()));
 
   s = new QWidget;
   s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   _bottomToolBar->addWidget(s);
 
-  _rightVisibilityAction = _bottomToolBar->addAction("Hide right panel", this, SLOT(xChangeRightVisibility()));
+  _rightVisibilityAction = _bottomToolBar->addAction(QIcon(":/icons/right_hide.svg"), "Show right panel",
+                                                     this, SLOT(xChangeRightVisibility()));
 
   QWidget* w = new QWidget;
   QVBoxLayout* lyt = new QVBoxLayout(w);
@@ -71,16 +75,28 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
 void IDEMainWindow::xChangeLeftVisibility()
 {
   _leftPanel->setVisible(!_leftPanel->isVisible());
+  if(_leftPanel->isVisible())
+    _leftVisibilityAction->setText("Hide left panel");
+  else
+    _leftVisibilityAction->setText("Show left panel");
 }
 
 void IDEMainWindow::xChangeRightVisibility()
 {
   _rightPanel->setVisible(!_rightPanel->isVisible());
+  if(_rightPanel->isVisible())
+    _rightVisibilityAction->setText("Hide right panel");
+  else
+    _rightVisibilityAction->setText("Show right panel");
 }
 
 void IDEMainWindow::xChangeBottomVisibility()
 {
   _bottomPanel->setVisible(!_bottomPanel->isVisible());
+  if(_bottomPanel->isVisible())
+    _bottomVisibilityAction->setText("Hide bottom panel");
+  else
+    _bottomVisibilityAction->setText("Show bottom panel");
 }
 
 } // namespace IDE

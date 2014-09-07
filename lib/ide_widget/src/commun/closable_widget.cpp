@@ -51,30 +51,19 @@ ClosableWidget::ClosableWidget(
   _toolBarEnd->setIconSize(QSize(16,16));
   _toolBarEnd->setObjectName("DarkToolBar");
 
-  _close = new QAction(this->style()->standardIcon(QStyle::SP_TitleBarCloseButton),
-                       "Close", this);
+  _close = new QAction(QIcon(":/icons/close.svg"), "Close", this);
 
-  _vSplitAction = new QAction(
-                    this->style()->standardIcon(QStyle::SP_ToolBarVerticalExtensionButton),
-                    "Vertical split", this);
-
-  _hSplitAction = new QAction(
-                    this->style()->standardIcon(QStyle::SP_ToolBarHorizontalExtensionButton),
-                    "Horizontal split", this);
-
-  _newWindowAction = new QAction(
-                    this->style()->standardIcon(QStyle::SP_TitleBarMaxButton),
-                    "Open in a new window", this);
-
-  _unsplitAction = new QAction(
-                     this->style()->standardIcon(QStyle::SP_TitleBarMaxButton),
-                     "Unsplit", this);
+  _vSplitAction = new QAction(QIcon(":/icons/v_split.svg"), "Vertical split", this);
+  _hSplitAction = new QAction(QIcon(":/icons/h_split.svg"), "Horizontal split", this);
+  _newWindowAction = new QAction(QIcon(":/icons/new_window.svg"), "Open in a new window", this);
+  _unsplitAction = new QAction(QIcon(":/icons/right_fold.svg"), "Unsplit", this);
 
   _splitMenu = new QMenu("");
   _splitMenu->addAction(_vSplitAction);
   _splitMenu->addAction(_hSplitAction);
   _splitMenu->addAction(_newWindowAction);
   QToolButton* toolButton = new QToolButton;
+  toolButton->setIcon(QIcon(":/icons/v_split.svg"));
   toolButton->setToolTip("Split");
   toolButton->setMenu(_splitMenu);
   toolButton->setPopupMode(QToolButton::InstantPopup);
