@@ -7,15 +7,7 @@ namespace IDE
 {
 
 BottomPanel::BottomPanel(QWidget *parent)
-  :QWidget(parent)
-{
-  QComboBox* combo = new QComboBox();
-  combo->setEditable(false);
-  combo->addItem("test");
-  //combo->addItem("test2");
-
-  QVBoxLayout* lyt = new QVBoxLayout(this);
-  lyt->addWidget(combo);
-}
+  : ClosableWidget(ClosableWidget::NoSplit, parent)
+{}
 
 } // namespace IDE
