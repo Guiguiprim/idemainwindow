@@ -15,6 +15,9 @@ set(
   "controller/editors_controller.cpp"
   "controller/side_panel_controller.hpp"
   "controller/side_panel_controller.cpp"
+
+  "dummy_content/dummy_closable_widget_element.hpp"
+  "dummy_content/dummy_closable_widget_element.cpp"
 )
 
 set(
