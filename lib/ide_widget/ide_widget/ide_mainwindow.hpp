@@ -23,7 +23,6 @@ public:
 private Q_SLOTS:
   void xChangeLeftVisibility();
   void xChangeRightVisibility();
-  void xChangeBottomVisibility();
 
 protected:
   EditorsArea* _editorsArea;
@@ -34,7 +33,6 @@ protected:
   QToolBar* _bottomToolBar;
   QAction* _leftVisibilityAction;
   QAction* _rightVisibilityAction;
-  QAction* _bottomVisibilityAction;
 
   BottomPanelChooser* _bottomPanelChooser;
 };

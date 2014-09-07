@@ -23,7 +23,6 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   , _bottomToolBar(NULL)
   , _leftVisibilityAction(NULL)
   , _rightVisibilityAction(NULL)
-  , _bottomVisibilityAction(NULL)
   , _bottomPanelChooser(NULL)
 {
   this->resize(800,600);
@@ -55,9 +54,6 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   QWidget* s = new QWidget;
   s->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   _bottomToolBar->addWidget(s);
-
-  _bottomVisibilityAction = _bottomToolBar->addAction(QIcon(":/icons/bottom_hide.svg"), "Show bottom panel",
-                                                      this, SLOT(xChangeBottomVisibility()));
 
   _bottomToolBar->addWidget(_bottomPanelChooser);
 
@@ -94,15 +90,6 @@ void IDEMainWindow::xChangeRightVisibility()
     _rightVisibilityAction->setText("Hide right panel");
   else
     _rightVisibilityAction->setText("Show right panel");
-}
-
-void IDEMainWindow::xChangeBottomVisibility()
-{
-  _bottomPanel->setVisible(!_bottomPanel->isVisible());
-  if(_bottomPanel->isVisible())
-    _bottomVisibilityAction->setText("Hide bottom panel");
-  else
-    _bottomVisibilityAction->setText("Show bottom panel");
 }
 
 } // namespace IDE
