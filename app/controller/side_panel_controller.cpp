@@ -42,7 +42,7 @@ bool SidePanelController::eventFilter(
       {
         ClosableWidget* cw2 = newClosableWidget();
         int index = _sidePanel->indexOf(cw);
-        _sidePanel->insertWidget(index, cw2);
+        _sidePanel->insertWidget(index+1, cw2);
       }
     }
     return true;

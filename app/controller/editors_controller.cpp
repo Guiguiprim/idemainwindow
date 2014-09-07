@@ -42,6 +42,7 @@ bool EditorsController::eventFilter(
           orientation = Qt::Vertical;
         ClosableWidget* cw2 = newClosableWidget();
         RecursiveIndex index = rs->indexOf(cw);
+        index.back() = index.last() + 1; // we want to insert after the current element
         if(!rs->insertWidget(index, cw2, orientation))
         {
           delete cw2;
