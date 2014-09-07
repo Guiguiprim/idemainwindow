@@ -48,10 +48,13 @@ BottomPanelChooser::~BottomPanelChooser()
   QMap<QWidget*, WidgetAction*>::iterator it;
   while(_widgetActions.size() > 0)
   {
+    it = _widgetActions.begin();
     QWidget* w = it.key();
     WidgetAction* wa = it.value();
     _widgetActions.remove(w);
     delete wa;
+    disconnect(w, SIGNAL(destroyed(QObject*)),
+               this, SLOT(xOnWidgetDestroyed(QObject*)));
     delete w;
   }
   _widgetActions.clear();
@@ -71,6 +74,8 @@ void BottomPanelChooser::registerWidget(QWidget *widget, const QString& name, bo
   wa->displayAction->setChecked(true);
 
   _widgetActions.insert(widget, wa);
+  connect(widget, SIGNAL(destroyed(QObject*)),
+          this, SLOT(xOnWidgetDestroyed(QObject*)));
 
   _openMap->setMapping(wa->openAction, widget);
   connect(wa->openAction, SIGNAL(triggered()), _openMap, SLOT(map()));
@@ -126,6 +131,18 @@ void BottomPanelChooser::xOnOpenTriggered(QWidget* widget)
   }
   else
     _bottomPanel->hide();
+}
+
+void BottomPanelChooser::xOnWidgetDestroyed(QObject* obj)
+{
+  // obj is being destroy so dynamic_cast may fail
+  // here we only use the pointer as value
+  QWidget* w = static_cast<QWidget*>(obj);
+  if(_widgetActions.find(w) != _widgetActions.end())
+  {
+    delete _widgetActions[w];
+    _widgetActions.remove(w);
+  }
 }
 
 } // namespace IDE

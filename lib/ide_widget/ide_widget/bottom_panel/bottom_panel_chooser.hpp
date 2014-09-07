@@ -34,6 +34,7 @@ public:
 private Q_SLOTS:
   void xOnDisplayTriggered(QWidget*);
   void xOnOpenTriggered(QWidget*);
+  void xOnWidgetDestroyed(QObject*);
 
 private:
   BottomPanel* _bottomPanel;
