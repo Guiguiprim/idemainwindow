@@ -31,6 +31,10 @@ public:
   void registerWidget(QWidget *widget, const QString& name, bool display = true);
   void registerWidget(ClosableWidgetElement *widget, bool display = true);
 
+  virtual bool eventFilter(
+      QObject* watched,
+      QEvent* event);
+
 private Q_SLOTS:
   void xOnDisplayTriggered(QWidget*);
   void xOnOpenTriggered(QWidget*);

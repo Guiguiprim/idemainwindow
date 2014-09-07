@@ -7,6 +7,7 @@
 
 #include <ide_widget/bottom_panel/bottom_panel.hpp>
 #include <ide_widget/commun/closable_widget_element.hpp>
+#include <ide_widget/commun/closable_widget_event.hpp>
 
 namespace IDE
 {
@@ -28,6 +29,8 @@ BottomPanelChooser::BottomPanelChooser(
   , _displayMap(new QSignalMapper(this))
 {
   this->setObjectName("DarkToolBar");
+
+  _bottomPanel->installEventFilter(this);
 
   _displayMenu = new QMenu;
 
@@ -99,6 +102,23 @@ void BottomPanelChooser::registerWidget(QWidget *widget, const QString& name, bo
 void BottomPanelChooser::registerWidget(ClosableWidgetElement *widget, bool display)
 {
   registerWidget(widget, widget->widgetName(), display);
+}
+
+bool BottomPanelChooser::eventFilter(
+  QObject* watched,
+  QEvent* event)
+{
+  if(event->type() == ClosableWidgetEvent::type())
+  {
+    ClosableWidgetEvent* cwEvent = static_cast<ClosableWidgetEvent*>(event);
+    if(cwEvent->requestedAction() == ClosableWidgetEvent::Close)
+    {
+        _bottomPanel->hide();
+    }
+    return true;
+  }
+  else
+    return QObject::eventFilter(watched, event);
 }
 
 void BottomPanelChooser::xOnDisplayTriggered(QWidget* widget)
