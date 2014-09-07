@@ -76,11 +76,11 @@ ClosableWidget::ClosableWidget(
   _toolBarEnd->addAction(_unsplitAction);
   _toolBarEnd->addAction(_close);
 
-  connect(_close, SIGNAL(triggered()), SLOT(emitEvent()));
-  connect(_unsplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
-  connect(_vSplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
-  connect(_hSplitAction, SIGNAL(triggered()), SLOT(emitEvent()));
-  connect(_newWindowAction, SIGNAL(triggered()), SLOT(emitEvent()));
+  connect(_close, SIGNAL(triggered()), SLOT(xEmitEvent()));
+  connect(_unsplitAction, SIGNAL(triggered()), SLOT(xEmitEvent()));
+  connect(_vSplitAction, SIGNAL(triggered()), SLOT(xEmitEvent()));
+  connect(_hSplitAction, SIGNAL(triggered()), SLOT(xEmitEvent()));
+  connect(_newWindowAction, SIGNAL(triggered()), SLOT(xEmitEvent()));
 
   setSplitConfig(splitConfig);
 }
@@ -153,12 +153,19 @@ void ClosableWidget::setWidget(QWidget* widget, bool deleteOld)
   if(_widget == widget)
     return;
 
+  if(_widget != _placeHolder)
+    disconnect(_widget, SIGNAL(destroyed(QObject*)), this, SLOT(xOnCurrentWidgetDestoyed()));
+
   _layout->removeWidget(_widget);
   if(deleteOld && widget != _placeHolder)
     delete _widget;
 
   _widget = widget;
   _layout->addWidget(_widget);
+
+  if(_widget != _placeHolder)
+    connect(_widget, SIGNAL(destroyed(QObject*)), this, SLOT(xOnCurrentWidgetDestoyed()));
+
   _toolBar->clear();
 }
 
@@ -181,7 +188,7 @@ void ClosableWidget::addToolBarAction(QAction* action)
   _toolBar->addAction(action);
 }
 
-void ClosableWidget::emitEvent()
+void ClosableWidget::xEmitEvent()
 {
   QObject* action = sender();
   if(action == _close)
@@ -209,6 +216,11 @@ void ClosableWidget::emitEvent()
     ClosableWidgetEvent event(ClosableWidgetEvent::NewWindow);
     QApplication::sendEvent(this, &event);
   }
+}
+
+void ClosableWidget::xOnCurrentWidgetDestoyed()
+{
+  clearWidget();
 }
 
 } // namespace IDE

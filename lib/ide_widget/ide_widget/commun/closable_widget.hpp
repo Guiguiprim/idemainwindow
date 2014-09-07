@@ -42,7 +42,8 @@ public:
   void addToolBarAction(QAction* action);
 
 private Q_SLOTS:
-  void emitEvent();
+  void xEmitEvent();
+  void xOnCurrentWidgetDestoyed();
 
 private:
   SplitConfig _splitConfig;
