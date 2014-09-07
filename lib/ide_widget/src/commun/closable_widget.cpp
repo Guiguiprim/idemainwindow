@@ -44,15 +44,9 @@ ClosableWidget::ClosableWidget(
   _toolBarLayout->addWidget(_toolBarEnd);
 
   _toolBar->setIconSize(QSize(16,16));
-  _toolBar->setStyleSheet("QToolBar { spacing: 0px;"
-                          "background: qlineargradient(y1:0, y2:1, stop: 0 #AAAAAA, stop: 1.0 #8A8A8A);"
-                          "color: darkgray;"
-                          "}");
+  _toolBar->setObjectName("DarkToolBar");
   _toolBarEnd->setIconSize(QSize(16,16));
-  _toolBarEnd->setStyleSheet("QToolBar { spacing: 0px;"
-                             "background: qlineargradient(y1:0, y2:1, stop: 0 #AAAAAA, stop: 1.0 #8A8A8A);"
-                             "color: darkgray;"
-                             "}");
+  _toolBarEnd->setObjectName("DarkToolBar");
 
   _close = new QAction(this->style()->standardIcon(QStyle::SP_TitleBarCloseButton),
                        "Close", this);

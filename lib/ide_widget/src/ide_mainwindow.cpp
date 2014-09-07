@@ -19,6 +19,9 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
 {
   this->resize(800,600);
 
+  this->setStyleSheet("QToolBar#DarkToolBar { spacing: 0px; color: darkgray;"
+                      "background: qlineargradient(y1:0, y2:1, stop: 0 #AAAAAA, stop: 1.0 #8A8A8A); }");
+
   Splitter* centralSplitter = new Splitter(Qt::Vertical);
   centralSplitter->addWidget(_editorsArea);
   centralSplitter->addWidget(_bottomPanel);
