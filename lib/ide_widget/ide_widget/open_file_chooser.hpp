@@ -1,12 +1,13 @@
 #ifndef IDE_OPEN_FILE_CHOOSER_HPP
 #define IDE_OPEN_FILE_CHOOSER_HPP
 
+#include "api.hpp"
 #include <QWidget>
 
 namespace IDE
 {
 
-class OpenFileChooser : public QWidget
+class IDE_WIDGET_LIB_EXPORT OpenFileChooser : public QWidget
 {
   Q_OBJECT
 public:

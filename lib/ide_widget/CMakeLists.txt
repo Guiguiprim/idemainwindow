@@ -5,6 +5,7 @@ find_package(qibuild)
 include(qibuild/modules/qt-tools)
 
 include_directories(".")
+add_definitions(-DIDE_WIDGET_LIBRARY)
 
 set(
   ide_widget_public_header
@@ -55,7 +56,7 @@ qi_create_lib(
   ${ide_widget_public_header}
   ${ide_widget_src}
   ${ide_widget_public_moc_src}
-  STATIC
+  SHARED
 )	
 
 qi_use_lib(

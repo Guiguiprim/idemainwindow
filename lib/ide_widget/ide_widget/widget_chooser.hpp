@@ -1,12 +1,13 @@
 #ifndef IDE_WIDGET_CHOOSER_HPP
 #define IDE_WIDGET_CHOOSER_HPP
 
+#include "api.hpp"
 #include <QWidget>
 
 namespace IDE
 {
 
-class WidgetChooser : public QWidget
+class IDE_WIDGET_LIB_EXPORT WidgetChooser : public QWidget
 {
   Q_OBJECT
 public:

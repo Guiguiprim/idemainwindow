@@ -1,6 +1,7 @@
 #ifndef IDE_SPLITTER_HPP
 #define IDE_SPLITTER_HPP
 
+#include "api.hpp"
 #include <QLinearGradient>
 #include <QSplitter>
 
@@ -20,7 +21,7 @@ private:
   QLinearGradient _gradient;
 };
 
-class Splitter : public QSplitter
+class IDE_WIDGET_LIB_EXPORT Splitter : public QSplitter
 {
   Q_OBJECT
 public:

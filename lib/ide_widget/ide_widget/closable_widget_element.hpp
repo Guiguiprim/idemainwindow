@@ -1,6 +1,7 @@
 #ifndef IDE_CLOSABLE_WIDGET_ELEMENT_HPP
 #define IDE_CLOSABLE_WIDGET_ELEMENT_HPP
 
+#include "api.hpp"
 #include <QWidget>
 
 #include <QList>
@@ -8,7 +9,7 @@
 namespace IDE
 {
 
-class ClosableWidgetElement : public QWidget
+class IDE_WIDGET_LIB_EXPORT ClosableWidgetElement : public QWidget
 {
   Q_OBJECT
 public:

@@ -1,6 +1,7 @@
 #ifndef IDE_CLOSABLE_WIDGET_HPP
 #define IDE_CLOSABLE_WIDGET_HPP
 
+#include "api.hpp"
 #include <QWidget>
 
 class QHBoxLayout;
@@ -13,7 +14,7 @@ namespace IDE
 {
 class ClosableWidgetElement;
 
-class ClosableWidget : public QWidget
+class IDE_WIDGET_LIB_EXPORT ClosableWidget : public QWidget
 {
   Q_OBJECT
 public:

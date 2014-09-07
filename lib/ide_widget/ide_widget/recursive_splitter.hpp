@@ -1,6 +1,7 @@
 #ifndef IDE_RECURSIVE_SPLITTER_HPP
 #define IDE_RECURSIVE_SPLITTER_HPP
 
+#include "api.hpp"
 #include <QVector>
 
 #include "splitter.hpp"
@@ -12,7 +13,7 @@ class ClosableWidget;
 //class RecursiveIndex : public QVector<int> {};
 typedef QVector<int> RecursiveIndex;
 
-class RecursiveSplitter : public Splitter
+class IDE_WIDGET_LIB_EXPORT RecursiveSplitter : public Splitter
 {
   Q_OBJECT
 public:

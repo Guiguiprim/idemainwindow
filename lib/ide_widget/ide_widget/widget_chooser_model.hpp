@@ -1,12 +1,13 @@
 #ifndef IDE_WIDGET_CHOOSER_MODEL_HPP
 #define IDE_WIDGET_CHOOSER_MODEL_HPP
 
+#include "api.hpp"
 #include <QObject>
 
 namespace IDE
 {
 
-class WidgetChooserModel : public QObject
+class IDE_WIDGET_LIB_EXPORT WidgetChooserModel : public QObject
 {
   Q_OBJECT
 public:
