@@ -7,6 +7,7 @@
 
 namespace IDE
 {
+class ClosableWidget;
 class RecursiveSplitter;
 typedef RecursiveSplitter EditorsArea;
 
@@ -19,6 +20,9 @@ public:
   virtual bool eventFilter(
       QObject* watched,
       QEvent* event);
+
+  virtual ClosableWidget* newClosableWidget() const;
+  virtual RecursiveSplitter* newRecursiveSplitter();
 
 private Q_SLOTS:
   void xWindowDestroyed(QObject* window);

@@ -11,9 +11,8 @@ EditorsController::EditorsController(EditorsArea* editorsArea, QObject *parent)
   : QObject(parent)
   , _editorsArea(editorsArea)
 {
-  ClosableWidget* cw = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
+  ClosableWidget* cw = newClosableWidget();
   _editorsArea->addWidget(cw);
-  cw->installEventFilter(this);
 }
 
 bool EditorsController::eventFilter(
@@ -41,23 +40,17 @@ bool EditorsController::eventFilter(
         Qt::Orientation orientation = Qt::Horizontal;
         if(cwEvent->requestedAction() == ClosableWidgetEvent::VerticalSplit)
           orientation = Qt::Vertical;
-        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
+        ClosableWidget* cw2 = newClosableWidget();
         RecursiveIndex index = rs->indexOf(cw);
-        if(rs->insertWidget(index, cw2, orientation))
-        {
-          cw2->installEventFilter(this);
-        }
-        else
+        if(!rs->insertWidget(index, cw2, orientation))
         {
           delete cw2;
         }
       }
       else if(cwEvent->requestedAction() == ClosableWidgetEvent::NewWindow)
       {
-        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
-        cw2->installEventFilter(this);
-
-        RecursiveSplitter* rs = new RecursiveSplitter;
+        ClosableWidget* cw2 = newClosableWidget();
+        RecursiveSplitter* rs = newRecursiveSplitter();
         rs->addWidget(cw2);
         rs->show();
 
@@ -69,6 +62,21 @@ bool EditorsController::eventFilter(
   }
   else
     return QObject::eventFilter(watched, event);
+}
+
+ClosableWidget* EditorsController::newClosableWidget() const
+{
+  ClosableWidget* cw = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
+  cw->installEventFilter(const_cast<EditorsController*>(this));
+  return cw;
+}
+
+RecursiveSplitter* EditorsController::newRecursiveSplitter()
+{
+  RecursiveSplitter* rs = new RecursiveSplitter;
+  connect(rs, SIGNAL(destroyed(QObject*)), this, SLOT(xWindowDestroyed(QObject*)));
+  _editorsAreaWindows.append(rs);
+  return rs;
 }
 
 void EditorsController::xWindowDestroyed(QObject* window)
