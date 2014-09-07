@@ -14,7 +14,7 @@ SidePanel::SidePanel(QWidget *parent)
   lyt->setMargin(0);
   lyt->setSpacing(0);
 
-  ClosableWidget* widget = new ClosableWidget;
+  ClosableWidget* widget = new ClosableWidget(ClosableWidget::VSplit);
   lyt->addWidget(widget);
 }
 

@@ -18,15 +18,21 @@ class IDE_WIDGET_LIB_EXPORT ClosableWidget : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ClosableWidget(QWidget *parent = NULL);
+  enum SplitConfig {
+    NoSplit,
+    VSplit,
+    Split,
+    SplitAndNewWindow
+  };
+
+public:
+  explicit ClosableWidget(SplitConfig splitConfig = NoSplit, QWidget *parent = NULL);
   ~ClosableWidget();
 
-  bool isVSplitEnable() const;
-  bool isHSplitEnable() const;
-  bool isWSplitEnable() const;
-  void setVSplitEnable(bool enable);
-  void setHSplitEnable(bool enable);
-  void setWSplitEnable(bool enable);
+  SplitConfig splitConfig() const;
+  void setSplitConfig(SplitConfig splitConfig);
+
+  void enableUnsplit(bool enable, Qt::Orientation orientation = Qt::Horizontal);
 
   QWidget* widget() const;
   void setWidget(QWidget* widget, bool deleteOld = false);
@@ -38,6 +44,7 @@ private Q_SLOTS:
   void emitEvent();
 
 private:
+  SplitConfig _splitConfig;
   QHBoxLayout* _toolBarLayout;
   //QToolBar* _toolBarChooser;
   QToolBar* _toolBar;
@@ -51,7 +58,7 @@ private:
   QAction* _vSplitAction;
   QAction* _hSplitAction;
   QAction* _newWindowAction;
-  QToolButton* _toolButton;
+  QAction* _splitActions;
   QMenu* _splitMenu;
 };
 

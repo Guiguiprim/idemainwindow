@@ -11,7 +11,7 @@ namespace IDE
 EditorsArea::EditorsArea(QWidget *parent)
   : QWidget(parent)
 {
-  ClosableWidget* cw = new ClosableWidget;
+  ClosableWidget* cw = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
 
   RecursiveSplitter* rs = new RecursiveSplitter;
   rs->addWidget(cw);

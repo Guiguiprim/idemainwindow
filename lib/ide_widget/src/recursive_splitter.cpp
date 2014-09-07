@@ -41,7 +41,7 @@ bool RecursiveSplitter::eventFilter(
         Qt::Orientation orientation = Qt::Horizontal;
         if(cwEvent->requestedAction() == ClosableWidgetEvent::VerticalSplit)
           orientation = Qt::Vertical;
-        ClosableWidget* cw2 = new ClosableWidget;
+        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
         RecursiveIndex index = this->indexOf(cw);
         if(this->insertWidget(index, cw2, orientation))
         {
@@ -55,7 +55,7 @@ bool RecursiveSplitter::eventFilter(
       else if(cwEvent->requestedAction() == ClosableWidgetEvent::NewWindow)
       {
         RecursiveSplitter* rs = new RecursiveSplitter;
-        ClosableWidget* cw2 = new ClosableWidget;
+        ClosableWidget* cw2 = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
         rs->addWidget(cw2);
         cw2->installEventFilter(rs);
         rs->show();
