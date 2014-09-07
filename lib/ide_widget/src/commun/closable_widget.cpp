@@ -23,7 +23,8 @@ ClosableWidget::ClosableWidget(
   , _toolBar(new QToolBar)
   , _toolBarEnd(new QToolBar)
   , _layout(new QVBoxLayout(this))
-  , _widget(new QWidget)
+  , _placeHolder(new QWidget)
+  , _widget(_placeHolder)
   , _close(NULL)
   , _unsplitAction(NULL)
   , _vSplitAction(NULL)
@@ -32,6 +33,8 @@ ClosableWidget::ClosableWidget(
   , _splitActions(NULL)
   , _splitMenu(NULL)
 {
+  _placeHolder->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
   _layout->setMargin(0);
   _layout->setSpacing(0);
   _layout->addLayout(_toolBarLayout);
@@ -95,6 +98,7 @@ ClosableWidget::ClosableWidget(
 
 ClosableWidget::~ClosableWidget()
 {
+  delete _placeHolder;
 }
 
 ClosableWidget::SplitConfig ClosableWidget::splitConfig() const
@@ -161,9 +165,10 @@ void ClosableWidget::setWidget(QWidget* widget, bool deleteOld)
     return;
 
   _layout->removeWidget(_widget);
-  if(deleteOld)
+  if(deleteOld && widget != _placeHolder)
     delete _widget;
 
+  _widget = widget;
   _layout->addWidget(_widget);
   _toolBar->clear();
 }
@@ -172,6 +177,14 @@ void ClosableWidget::setWidget(ClosableWidgetElement* widget, bool deleteOld)
 {
   setWidget(static_cast<QWidget*>(widget), deleteOld);
   _toolBar->addActions(widget->attachActions());
+}
+
+void ClosableWidget::clearWidget(bool deleteOld)
+{
+  if(_widget == _placeHolder)
+    return;
+
+  setWidget(_placeHolder, deleteOld);
 }
 
 void ClosableWidget::addToolBarAction(QAction* action)

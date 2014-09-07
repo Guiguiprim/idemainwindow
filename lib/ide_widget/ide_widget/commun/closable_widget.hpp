@@ -37,6 +37,7 @@ public:
   QWidget* widget() const;
   void setWidget(QWidget* widget, bool deleteOld = false);
   void setWidget(ClosableWidgetElement* widget, bool deleteOld = false);
+  void clearWidget(bool deleteOld = false);
 
   void addToolBarAction(QAction* action);
 
@@ -51,8 +52,9 @@ private:
   QToolBar* _toolBarEnd;
 
   QVBoxLayout* _layout;
-  QWidget* _widget;
+  QWidget* _placeHolder;
 
+  QWidget* _widget;
   QAction* _close;
   QAction* _unsplitAction;
   QAction* _vSplitAction;
