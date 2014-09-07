@@ -17,7 +17,7 @@ class IDE_WIDGET_LIB_EXPORT IDEMainWindow : public QMainWindow
 public:
   explicit IDEMainWindow(QWidget *parent = NULL);
 
-private:
+protected:
   EditorsArea* _editorsArea;
   SidePanel* _leftPanel;
   SidePanel* _rightPanel;
