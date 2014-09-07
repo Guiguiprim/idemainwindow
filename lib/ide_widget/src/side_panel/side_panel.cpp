@@ -8,14 +8,7 @@ namespace IDE
 {
 
 SidePanel::SidePanel(QWidget *parent)
-  : QWidget(parent)
-{
-  QVBoxLayout* lyt = new QVBoxLayout(this);
-  lyt->setMargin(0);
-  lyt->setSpacing(0);
-
-  ClosableWidget* widget = new ClosableWidget(ClosableWidget::VSplit);
-  lyt->addWidget(widget);
-}
+  : Splitter(Qt::Vertical, parent)
+{}
 
 } // namespace IDE

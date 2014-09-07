@@ -2,12 +2,12 @@
 #define IDE_SIDE_PANEL_HPP
 
 #include "../api.hpp"
-#include <QWidget>
+#include <ide_widget/commun/splitter.hpp>
 
 namespace IDE
 {
 
-class IDE_WIDGET_LIB_EXPORT SidePanel : public QWidget
+class IDE_WIDGET_LIB_EXPORT SidePanel : public Splitter
 {
   Q_OBJECT
 public:
