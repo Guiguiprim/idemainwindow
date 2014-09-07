@@ -110,7 +110,20 @@ void BottomPanelChooser::xOnDisplayTriggered(QWidget* widget)
 void BottomPanelChooser::xOnOpenTriggered(QWidget* widget)
 {
   if(_widgetActions[widget]->openAction->isChecked())
+  {
     _bottomPanel->setWidget(widget);
+    _bottomPanel->show();
+    QMap<QWidget*, WidgetAction*>::iterator it;
+    for(it = _widgetActions.begin(); it != _widgetActions.end(); ++it)
+    {
+      if(it.key() != widget)
+      {
+        it.value()->openAction->blockSignals(true);
+        it.value()->openAction->setChecked(false);
+        it.value()->openAction->blockSignals(false);
+      }
+    }
+  }
   else
     _bottomPanel->hide();
 }
