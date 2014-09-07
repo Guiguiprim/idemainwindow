@@ -202,6 +202,22 @@ QWidget* RecursiveSplitter::removeWidget(
   if(w && index.size() == 1)
   {
     w->setParent(newParent);
+    if(this->count() == 1)
+    {
+      // remove useless recursion splitter
+      QWidget* w2 = this->widget(0);
+      RecursiveSplitter* rs = dynamic_cast<RecursiveSplitter*>(w2);
+      if(rs)
+      {
+        this->setOrientation(rs->orientation());
+        while(rs->count() > 0)
+        {
+          w2 = rs->widget(0);
+          this->QSplitter::addWidget(w2);
+        }
+        delete rs;
+      }
+    }
     return w;
   }
 
