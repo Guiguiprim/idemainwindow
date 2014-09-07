@@ -31,6 +31,7 @@ Splitter::Splitter(Qt::Orientation orientation, QWidget *parent)
   : QSplitter(orientation, parent)
 {
   this->setHandleWidth(2);
+  this->setChildrenCollapsible(false);
 }
 
 QSplitterHandle* Splitter::createHandle()
