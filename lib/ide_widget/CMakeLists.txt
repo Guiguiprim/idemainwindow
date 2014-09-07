@@ -13,6 +13,7 @@ set(
   "ide_widget/ide_mainwindow.hpp"
 
   "ide_widget/bottom_panel/bottom_panel.hpp"
+  "ide_widget/bottom_panel/bottom_panel_chooser.hpp"
 
   "ide_widget/commun/closable_widget.hpp"
   "ide_widget/commun/closable_widget_element.hpp"
@@ -36,6 +37,7 @@ set(
   "src/ide_mainwindow.cpp"
 
   "src/bottom_panel/bottom_panel.cpp"
+  "src/bottom_panel/bottom_panel_chooser.cpp"
 
   "src/commun/closable_widget.cpp"
   "src/commun/closable_widget_element.cpp"
@@ -58,6 +60,7 @@ set(
   "ide_widget/ide_mainwindow.hpp"
 
   "ide_widget/bottom_panel/bottom_panel.hpp"
+  "ide_widget/bottom_panel/bottom_panel_chooser.hpp"
 
   "ide_widget/commun/closable_widget.hpp"
   "ide_widget/commun/closable_widget_element.hpp"
