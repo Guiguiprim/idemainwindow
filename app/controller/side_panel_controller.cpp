@@ -27,7 +27,7 @@ bool SidePanelController::eventFilter(
     ClosableWidget* cw = dynamic_cast<ClosableWidget*>(watched);
     if(cw)
     {
-      if(cwEvent->requestedAction() == ClosableWidgetEvent::Unsplit)
+      if(cwEvent->requestedAction() == ClosableWidgetEvent::Close)
       {
         if(_sidePanel->count() > 1)
         {
@@ -54,6 +54,7 @@ bool SidePanelController::eventFilter(
 ClosableWidget* SidePanelController::newClosableWidget() const
 {
   ClosableWidget* cw = new ClosableWidget(ClosableWidget::VSplit);
+  cw->enableUnsplit(false);
   cw->installEventFilter(const_cast<SidePanelController*>(this));
   return cw;
 }
