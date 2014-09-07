@@ -17,23 +17,21 @@ IDEMainWindow::IDEMainWindow(QWidget *parent)
   , _rightPanel(new SidePanel)
   , _bottomPanel(new BottomPanel)
 {
-  ClosableWidget* cw = new ClosableWidget(ClosableWidget::SplitAndNewWindow);
-  _editorsArea->addWidget(cw);
-  cw->installEventFilter(_editorsArea);
+  this->resize(800,600);
 
   Splitter* centralSplitter = new Splitter(Qt::Vertical);
   centralSplitter->addWidget(_editorsArea);
   centralSplitter->addWidget(_bottomPanel);
+  _bottomPanel->hide();
 
   Splitter* globalSplitter = new Splitter(Qt::Horizontal);
   globalSplitter->addWidget(_leftPanel);
   globalSplitter->addWidget(centralSplitter);
   globalSplitter->addWidget(_rightPanel);
+  _leftPanel->hide();
   _rightPanel->hide();
 
   this->setCentralWidget(globalSplitter);
-
-  this->resize(800,600);
 }
 
 } // namespace IDE

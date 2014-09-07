@@ -5,6 +5,7 @@
 
 namespace IDE
 {
+class EditorsController;
 
 class MyIdeMainWindow : public IDEMainWindow
 {
@@ -12,6 +13,8 @@ class MyIdeMainWindow : public IDEMainWindow
 public:
   explicit MyIdeMainWindow(QWidget *parent = NULL);
 
+private:
+  EditorsController* _editorsController;
 };
 
 } // namespace IDE
