@@ -108,4 +108,6 @@ qi_install_header(
   ${ide_widget_public_header}
 )
 
+qi_generate_qt_conf()
+
 
