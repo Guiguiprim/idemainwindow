@@ -78,6 +78,78 @@ void SplitterArea::createSomeHandlers()
   _widgets.append(widget);
 }
 
+QByteArray SplitterArea::saveConfig() const
+{
+  return QByteArray();
+}
+
+bool SplitterArea::loadConfig(QByteArray config)
+{
+  return false;
+}
+
+int SplitterArea::indexOf(QWidget* widget) const
+{
+  for(int i=0; i<_widgets.size(); ++i)
+  {
+    if(_widgets.at(i)->widget() = widget)
+      return i;
+  }
+  return -1;
+}
+int SplitterArea::indexAt(QPoint pos) const
+{
+
+}
+QWidget* SplitterArea::widgetAt(int index) const
+{
+
+}
+QWidget* SplitterArea::widgetAt(QPoint pos) const
+{
+
+}
+SplitterWidget* SplitterArea::splitterWidgetAt(int index) const
+{
+
+}
+SplitterWidget* SplitterArea::splitterWidgetAt(QPoint pos) const
+{
+
+}
+
+SplitterWidget* SplitterArea::verticalSplit(
+    int index,
+    float proportion)
+{
+
+}
+
+SplitterWidget* SplitterArea::horizontalSplit(
+    int index,
+    float proportion)
+{
+
+}
+
+bool SplitterArea::add(
+    QWidget* widget,
+    int index,
+    Qt::Orientation orientation,
+    float proportion)
+{
+
+}
+
+bool SplitterArea::insert(
+    QWidget* widget,
+    int index,
+    Qt::Orientation orientation,
+    float proportion)
+{
+
+}
+
 void SplitterArea::resizeEvent(QResizeEvent* event)
 {
   if(!this->isVisible())
@@ -98,6 +170,36 @@ void SplitterArea::resizeEvent(QResizeEvent* event)
 
   _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
   _rightHandler->setPos(this->width() - _rightHandler->thickness());
+}
+
+int SplitterArea::xVerticalHandlerIndex(SplitterHandler* handler) const
+{
+  if(handler == _leftHandler)
+    return 0;
+
+  if(handler == _rightHandler)
+    return 1;
+
+  int i = _verticalHandlers.indexOf(handler);
+  if(i > -1)
+    return i + 2;
+
+  return -1;
+}
+
+int SplitterArea::xHorizontalHandlerIndex(SplitterHandler* handler) const
+{
+  if(handler == _topHandler)
+    return 0;
+
+  if(handler == _bottomHandler)
+    return 1;
+
+  int i = _horizontalHandlers.indexOf(handler);
+  if(i > -1)
+    return i + 2;
+
+  return -1;
 }
 
 } // namespace IDE
