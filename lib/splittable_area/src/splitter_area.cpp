@@ -3,6 +3,7 @@
 #include <QResizeEvent>
 
 #include <splittable_area/splitter_handler.hpp>
+#include <splittable_area/splitter_widget.hpp>
 
 namespace IDE
 {
@@ -47,12 +48,34 @@ void SplitterArea::createSomeHandlers()
   hHandler->setHandler(IDE::RIGHT, _rightHandler);
   _horizontalHandlers.append(hHandler);
 
+  SplitterWidget* widget = new SplitterWidget(this);
+  widget->setHandler(IDE::LEFT, _leftHandler);
+  widget->setHandler(IDE::RIGHT, _rightHandler);
+  widget->setHandler(IDE::TOP, hHandler);
+  widget->setHandler(IDE::BOTTOM, _bottomHandler);
+  _widgets.append(widget);
 
   SplitterHandler* vHandler = new SplitterHandler(Qt::Vertical, this);
   vHandler->setPos(200);
   vHandler->setHandler(IDE::TOP, _topHandler);
   vHandler->setHandler(IDE::BOTTOM, hHandler);
   _verticalHandlers.append(vHandler);
+
+  widget = new SplitterWidget(this);
+  widget->setColor(Qt::blue);
+  widget->setHandler(IDE::LEFT, _leftHandler);
+  widget->setHandler(IDE::RIGHT, vHandler);
+  widget->setHandler(IDE::TOP, _topHandler);
+  widget->setHandler(IDE::BOTTOM, hHandler);
+  _widgets.append(widget);
+
+  widget = new SplitterWidget(this);
+  widget->setColor(Qt::green);
+  widget->setHandler(IDE::LEFT, vHandler);
+  widget->setHandler(IDE::RIGHT, _rightHandler);
+  widget->setHandler(IDE::TOP, _topHandler);
+  widget->setHandler(IDE::BOTTOM, hHandler);
+  _widgets.append(widget);
 }
 
 void SplitterArea::resizeEvent(QResizeEvent* event)

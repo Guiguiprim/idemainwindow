@@ -14,7 +14,12 @@ class SplitterWidget : public SplitterWidgetBase
 public:
   SplitterWidget(SplitterArea *splitterArea = NULL);
 
+  void setColor(QColor color);
 
+protected:
+  virtual void paintEvent(QPaintEvent *event);
+
+  QColor _color;
 };
 
 } // namespace IDE

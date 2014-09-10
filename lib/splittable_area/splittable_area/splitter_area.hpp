@@ -10,6 +10,7 @@
 namespace IDE
 {
 class SplitterHandler;
+class SplitterWidget;
 
 class SplitterArea : public QWidget
 {
@@ -30,6 +31,7 @@ private:
 
   QList<SplitterHandler*> _verticalHandlers;
   QList<SplitterHandler*> _horizontalHandlers;
+  QList<SplitterWidget*> _widgets;
 };
 
 } // namespace IDE
