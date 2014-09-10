@@ -65,6 +65,17 @@ int SplitterArea::indexOf(QWidget* widget) const
   }
   return -1;
 }
+
+int SplitterArea::indexOfSplitterWidget(SplitterWidget* splitterWidget) const
+{
+  for(int i=0; i<_splitterWidgets.size(); ++i)
+  {
+    if(_splitterWidgets.at(i) == splitterWidget)
+      return i;
+  }
+  return -1;
+}
+
 int SplitterArea::indexAt(QPoint pos) const
 {
 
@@ -160,22 +171,68 @@ SplitterWidget* SplitterArea::horizontalSplit(
   return nsw;
 }
 
-bool SplitterArea::add(
+bool SplitterArea::addWidget(
     QWidget* widget,
     int index,
     Qt::Orientation orientation,
     float proportion)
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return false; // invalide index
 
+  if(0 >= proportion || 1 <= proportion)
+    return false; // invalide proportion
+
+  SplitterWidget* nsw = NULL;
+  if(Qt::Horizontal == orientation)
+    nsw = this->horizontalSplit(index, proportion);
+  else
+    nsw = this->verticalSplit(index, proportion);
+
+  if(!nsw)
+    return false;
+
+  nsw->setWidget(widget);
+  return true;
 }
 
-bool SplitterArea::insert(
+bool SplitterArea::insertWidget(
     QWidget* widget,
     int index,
     Qt::Orientation orientation,
     float proportion)
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return false; // invalide index
 
+  if(0 >= proportion || 1 <= proportion)
+    return false; // invalide proportion
+
+  SplitterWidget* sw = _splitterWidgets.at(index);
+  SplitterWidget* nsw = NULL;
+  if(Qt::Horizontal == orientation)
+    nsw = this->horizontalSplit(index, proportion);
+  else
+    nsw = this->verticalSplit(index, proportion);
+
+  if(!nsw)
+    return false;
+
+  nsw->setWidget(sw->takeWidget());
+  sw->setWidget(widget);
+  return true;
+}
+
+bool SplitterArea::setWidgetAt(
+    QWidget* widget,
+    int index)
+{
+  if(index < 0 || index >= _splitterWidgets.size())
+    return false; // invalide index
+
+  SplitterWidget* sw = _splitterWidgets.at(index);
+  sw->setWidget(widget);
+  return true;
 }
 
 void SplitterArea::resizeEvent(QResizeEvent* event)

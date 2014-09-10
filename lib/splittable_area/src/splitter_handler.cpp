@@ -207,10 +207,6 @@ void SplitterHandler::mousePressEvent(QMouseEvent* event)
   if(event->button() == Qt::LeftButton)
   {
     _isBeingDrag = true;
-    if(_orientation == Qt::Horizontal)
-      _lastMousePos = event->y();
-    else
-      _lastMousePos = event->x();
     event->accept();
   }
 }
@@ -228,12 +224,9 @@ void SplitterHandler::mouseMoveEvent(QMouseEvent* event)
 {
   if(_isBeingDrag)
   {
-    int newPos;
-    if(_orientation == Qt::Horizontal)
-      newPos = event->y();
-    else
-      newPos = event->x();
-
+    //@TODO : Handle move limitation:
+    // should be block by other handler (+ min spacing)
+    // => splitter area should compute minimum size
     int to;
     if(_orientation == Qt::Horizontal)
       to = _splitterArea->mapFromGlobal(event->globalPos()).y();
@@ -241,10 +234,6 @@ void SplitterHandler::mouseMoveEvent(QMouseEvent* event)
       to = _splitterArea->mapFromGlobal(event->globalPos()).x();
     this->setPos(to);
 
-//    int diff = newPos - _lastMousePos;
-//    this->setPos(this->pos() + diff);
-
-    _lastMousePos = newPos;
     event->accept();
   }
 }

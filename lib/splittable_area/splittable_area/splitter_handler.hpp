@@ -68,7 +68,6 @@ private:
   int _pos;
 
   bool _isBeingDrag;
-  int _lastMousePos;
 
   QMap<SplitterWidgetBase*, SplitterSide> _handleWidgets;
 };

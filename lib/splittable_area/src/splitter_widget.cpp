@@ -37,4 +37,9 @@ QWidget* SplitterWidget::widget() const
   return _srcollArea->widget();
 }
 
+QWidget* SplitterWidget::takeWidget() const
+{
+  return _srcollArea->takeWidget();
+}
+
 } // namespace IDE

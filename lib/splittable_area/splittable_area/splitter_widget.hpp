@@ -19,6 +19,7 @@ public:
 
   void setWidget(QWidget* widget);
   QWidget* widget() const;
+  QWidget* takeWidget() const;
 
 private:
   QScrollArea* _srcollArea;

@@ -22,6 +22,7 @@ public:
   bool loadConfig(QByteArray config);
 
   int indexOf(QWidget* widget) const;
+  int indexOfSplitterWidget(SplitterWidget* splitterWidget) const;
   int indexAt(QPoint pos) const; // local pos
   QWidget* widgetAt(int index) const;
   QWidget* widgetAt(QPoint pos) const; // local pos
@@ -35,16 +36,21 @@ public:
       int index,
       float proportion = 0.5f);
 
-  bool add(
+  bool addWidget(
       QWidget* widget,
       int index,
-      Qt::Orientation orientation,
+      Qt::Orientation orientation = Qt::Horizontal,
       float proportion = 0.5f);
-  bool insert(
+
+  bool insertWidget(
       QWidget* widget,
       int index,
-      Qt::Orientation orientation,
+      Qt::Orientation orientation = Qt::Horizontal,
       float proportion = 0.5f);
+
+  bool setWidgetAt(
+      QWidget* widget,
+      int index);
 
 protected:
   virtual void resizeEvent(QResizeEvent* event);
