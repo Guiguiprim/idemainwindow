@@ -18,8 +18,6 @@ class SplitterArea : public QWidget
 public:
   SplitterArea(QWidget *parent = NULL);
 
-  void createSomeHandlers();
-
   QByteArray saveConfig() const;
   bool loadConfig(QByteArray config);
 
@@ -72,7 +70,7 @@ private:
 
   QList<SplitterHandler*> _verticalHandlers;
   QList<SplitterHandler*> _horizontalHandlers;
-  QList<SplitterWidget*> _widgets;
+  QList<SplitterWidget*> _splitterWidgets;
 };
 
 } // namespace IDE

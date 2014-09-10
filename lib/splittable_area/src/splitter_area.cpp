@@ -38,44 +38,12 @@ SplitterArea::SplitterArea(QWidget* parent)
   _rightHandler->setHandler(IDE::TOP, _topHandler);
   _rightHandler->setHandler(IDE::BOTTOM, _bottomHandler);
 
-}
-
-void SplitterArea::createSomeHandlers()
-{
-  SplitterHandler* hHandler = new SplitterHandler(Qt::Horizontal, this);
-  hHandler->setPos(200);
-  hHandler->setHandler(IDE::LEFT, _leftHandler);
-  hHandler->setHandler(IDE::RIGHT, _rightHandler);
-  _horizontalHandlers.append(hHandler);
-
   SplitterWidget* widget = new SplitterWidget(this);
-  widget->setHandler(IDE::LEFT, _leftHandler);
-  widget->setHandler(IDE::RIGHT, _rightHandler);
-  widget->setHandler(IDE::TOP, hHandler);
+  _splitterWidgets.append(widget);
+  widget->setHandler(IDE::TOP, _topHandler);
   widget->setHandler(IDE::BOTTOM, _bottomHandler);
-  _widgets.append(widget);
-
-  SplitterHandler* vHandler = new SplitterHandler(Qt::Vertical, this);
-  vHandler->setPos(200);
-  vHandler->setHandler(IDE::TOP, _topHandler);
-  vHandler->setHandler(IDE::BOTTOM, hHandler);
-  _verticalHandlers.append(vHandler);
-
-  widget = new SplitterWidget(this);
-  widget->setColor("blue");
   widget->setHandler(IDE::LEFT, _leftHandler);
-  widget->setHandler(IDE::RIGHT, vHandler);
-  widget->setHandler(IDE::TOP, _topHandler);
-  widget->setHandler(IDE::BOTTOM, hHandler);
-  _widgets.append(widget);
-
-  widget = new SplitterWidget(this);
-  widget->setColor("green");
-  widget->setHandler(IDE::LEFT, vHandler);
   widget->setHandler(IDE::RIGHT, _rightHandler);
-  widget->setHandler(IDE::TOP, _topHandler);
-  widget->setHandler(IDE::BOTTOM, hHandler);
-  _widgets.append(widget);
 }
 
 QByteArray SplitterArea::saveConfig() const
@@ -90,9 +58,9 @@ bool SplitterArea::loadConfig(QByteArray config)
 
 int SplitterArea::indexOf(QWidget* widget) const
 {
-  for(int i=0; i<_widgets.size(); ++i)
+  for(int i=0; i<_splitterWidgets.size(); ++i)
   {
-    if(_widgets.at(i)->widget() = widget)
+    if(_splitterWidgets.at(i)->widget() == widget)
       return i;
   }
   return -1;
@@ -122,14 +90,74 @@ SplitterWidget* SplitterArea::verticalSplit(
     int index,
     float proportion)
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return NULL; // invalide index
 
+  if(0 >= proportion || 1 <= proportion)
+    return NULL; // invalide proportion
+
+  SplitterWidget* sw = _splitterWidgets.at(index);
+  SplitterHandler* topHandler = sw->handler(IDE::TOP);
+  SplitterHandler* bottomHandler = sw->handler(IDE::BOTTOM);
+  SplitterHandler* leftHandler = sw->handler(IDE::LEFT);
+  SplitterHandler* rightHandler = sw->handler(IDE::RIGHT);
+
+  SplitterHandler* newHandler = new SplitterHandler(Qt::Vertical, this);
+  _verticalHandlers.append(newHandler);
+  newHandler->setHandler(IDE::TOP, topHandler);
+  newHandler->setHandler(IDE::BOTTOM, bottomHandler);
+
+  int width = rightHandler->pos() - leftHandler->pos();
+  int pos = leftHandler->pos() + width * proportion;
+  newHandler->setPos(pos);
+
+  sw->setHandler(IDE::RIGHT, newHandler);
+
+  SplitterWidget* nsw = new SplitterWidget(this);
+  _splitterWidgets.append(nsw);
+  nsw->setHandler(IDE::TOP, topHandler);
+  nsw->setHandler(IDE::BOTTOM, bottomHandler);
+  nsw->setHandler(IDE::LEFT, newHandler);
+  nsw->setHandler(IDE::RIGHT, rightHandler);
+
+  return nsw;
 }
 
 SplitterWidget* SplitterArea::horizontalSplit(
     int index,
     float proportion)
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return NULL; // invalide index
 
+  if(0 >= proportion || 1 <= proportion)
+    return NULL; // invalide proportion
+
+  SplitterWidget* sw = _splitterWidgets.at(index);
+  SplitterHandler* topHandler = sw->handler(IDE::TOP);
+  SplitterHandler* bottomHandler = sw->handler(IDE::BOTTOM);
+  SplitterHandler* leftHandler = sw->handler(IDE::LEFT);
+  SplitterHandler* rightHandler = sw->handler(IDE::RIGHT);
+
+  SplitterHandler* newHandler = new SplitterHandler(Qt::Horizontal, this);
+  _horizontalHandlers.append(newHandler);
+  newHandler->setHandler(IDE::LEFT, leftHandler);
+  newHandler->setHandler(IDE::RIGHT, rightHandler);
+
+  int height = bottomHandler->pos() - topHandler->pos();
+  int pos = topHandler->pos() + height * proportion;
+  newHandler->setPos(pos);
+
+  sw->setHandler(IDE::BOTTOM, newHandler);
+
+  SplitterWidget* nsw = new SplitterWidget(this);
+  _splitterWidgets.append(nsw);
+  nsw->setHandler(IDE::TOP, newHandler);
+  nsw->setHandler(IDE::BOTTOM, bottomHandler);
+  nsw->setHandler(IDE::LEFT, leftHandler);
+  nsw->setHandler(IDE::RIGHT, rightHandler);
+
+  return nsw;
 }
 
 bool SplitterArea::add(
