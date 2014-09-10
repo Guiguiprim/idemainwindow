@@ -62,7 +62,7 @@ void SplitterArea::createSomeHandlers()
   _verticalHandlers.append(vHandler);
 
   widget = new SplitterWidget(this);
-  widget->setColor(Qt::blue);
+  widget->setColor("blue");
   widget->setHandler(IDE::LEFT, _leftHandler);
   widget->setHandler(IDE::RIGHT, vHandler);
   widget->setHandler(IDE::TOP, _topHandler);
@@ -70,7 +70,7 @@ void SplitterArea::createSomeHandlers()
   _widgets.append(widget);
 
   widget = new SplitterWidget(this);
-  widget->setColor(Qt::green);
+  widget->setColor("green");
   widget->setHandler(IDE::LEFT, vHandler);
   widget->setHandler(IDE::RIGHT, _rightHandler);
   widget->setHandler(IDE::TOP, _topHandler);

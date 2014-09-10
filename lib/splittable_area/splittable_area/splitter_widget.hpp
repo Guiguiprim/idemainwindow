@@ -3,6 +3,7 @@
 
 #include <splittable_area/splitter_widget_base.hpp>
 
+class QScrollArea;
 
 namespace IDE
 {
@@ -14,12 +15,13 @@ class SplitterWidget : public SplitterWidgetBase
 public:
   SplitterWidget(SplitterArea *splitterArea = NULL);
 
-  void setColor(QColor color);
+  void setColor(const QString& color);
 
-protected:
-  virtual void paintEvent(QPaintEvent *event);
+  void setWidget(QWidget* widget);
+  QWidget* widget() const;
 
-  QColor _color;
+private:
+  QScrollArea* _srcollArea;
 };
 
 } // namespace IDE
