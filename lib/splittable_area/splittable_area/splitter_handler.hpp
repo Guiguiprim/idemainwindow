@@ -53,6 +53,12 @@ private Q_SLOTS:
 
 protected:
   virtual void paintEvent(QPaintEvent *event);
+  virtual void contextMenuEvent(QContextMenuEvent* event);
+  virtual void enterEvent(QEvent* event);
+  virtual void leaveEvent(QEvent* event);
+  virtual void mousePressEvent(QMouseEvent* event);
+  virtual void mouseReleaseEvent(QMouseEvent* event);
+  virtual void mouseMoveEvent(QMouseEvent* event);
 
 private:
   QLinearGradient _gradient;
@@ -60,6 +66,9 @@ private:
   int _thickness;
   bool _movable;
   int _pos;
+
+  bool _isBeingDrag;
+  int _lastMousePos;
 
   QMap<SplitterWidgetBase*, SplitterSide> _handleWidgets;
 };

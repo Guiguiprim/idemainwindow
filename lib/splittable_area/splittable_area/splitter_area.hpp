@@ -17,6 +17,8 @@ class SplitterArea : public QWidget
 public:
   SplitterArea(QWidget *parent = NULL);
 
+  void createSomeHandlers();
+
 protected:
   virtual void resizeEvent(QResizeEvent* event);
 
@@ -26,8 +28,8 @@ private:
   SplitterHandler* _leftHandler;
   SplitterHandler* _rightHandler;
 
-  QList<SplitterHandler*> _verticalHandler;
-  QList<SplitterHandler*> _horizontalHandler;
+  QList<SplitterHandler*> _verticalHandlers;
+  QList<SplitterHandler*> _horizontalHandlers;
 };
 
 } // namespace IDE

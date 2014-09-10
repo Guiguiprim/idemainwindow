@@ -37,23 +37,38 @@ SplitterArea::SplitterArea(QWidget* parent)
   _rightHandler->setHandler(IDE::TOP, _topHandler);
   _rightHandler->setHandler(IDE::BOTTOM, _bottomHandler);
 
-  _topHandler->show();
-  _bottomHandler->show();
-  _leftHandler->show();
-  _rightHandler->show();
+}
+
+void SplitterArea::createSomeHandlers()
+{
+  SplitterHandler* hHandler = new SplitterHandler(Qt::Horizontal, this);
+  hHandler->setPos(200);
+  hHandler->setHandler(IDE::LEFT, _leftHandler);
+  hHandler->setHandler(IDE::RIGHT, _rightHandler);
+  _horizontalHandlers.append(hHandler);
+
+
+  SplitterHandler* vHandler = new SplitterHandler(Qt::Vertical, this);
+  vHandler->setPos(200);
+  vHandler->setHandler(IDE::TOP, _topHandler);
+  vHandler->setHandler(IDE::BOTTOM, hHandler);
+  _verticalHandlers.append(vHandler);
 }
 
 void SplitterArea::resizeEvent(QResizeEvent* event)
 {
+  if(!this->isVisible())
+    return;
+
   float vFac = this->height() / event->oldSize().height();
   float hFac = this->width() / event->oldSize().width();
 
-  Q_FOREACH(SplitterHandler* handler, _verticalHandler)
+  Q_FOREACH(SplitterHandler* handler, _verticalHandlers)
   {
     handler->setPos(handler->pos() * vFac);
   }
 
-  Q_FOREACH(SplitterHandler* handler, _horizontalHandler)
+  Q_FOREACH(SplitterHandler* handler, _horizontalHandlers)
   {
     handler->setPos(handler->pos() * hFac);
   }

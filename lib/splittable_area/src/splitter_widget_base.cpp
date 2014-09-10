@@ -38,7 +38,7 @@ void SplitterWidgetBase::setTopPos(int top)
 void SplitterWidgetBase::setBottomPos(int bottom)
 {
   // bottom side move => height change
-  int diff = this->pos().y() + this->height() - bottom;
+  int diff = bottom - this->pos().y() - this->height();
   this->resize(this->width(), this->height() + diff);
 }
 
@@ -53,7 +53,7 @@ void SplitterWidgetBase::setLeftPos(int left)
 void SplitterWidgetBase::setRightPos(int right)
 {
   // right side move => width change
-  int diff = this->pos().x() + this->width() - right;
+  int diff = right - this->pos().x() - this->width();
   this->resize(this->width() + diff, this->height());
 }
 
