@@ -69,9 +69,17 @@ qi_generate_qt_conf()
 
 
 # test
+qt4_wrap_cpp(
+  splittable_area_test_moc_src
+  "test/main_window.hpp"
+)
+
 qi_create_bin(
   splittable_area_test
   "test/main.cpp"
+  "test/main_window.cpp"
+  "test/main_window.hpp"
+  ${splittable_area_test_moc_src}
   DEPENDS
   splittable_area
 )

@@ -5,6 +5,7 @@
 
 namespace IDE
 {
+class SplitterArea;
 
 class MainWindow : public QMainWindow
 {
@@ -12,7 +13,25 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = NULL);
 
+private Q_SLOTS:
+  void onVerticalSplit();
+  void onHorizontalSplit();
+  void onLeftSplit();
+  void onRightSplit();
+  void onTopSplit();
+  void onBottomSplit();
+  void onRemoveCurrent();
 
+private:
+  SplitterArea* _splittableArea;
+
+  QAction* _verticalSplit;
+  QAction* _horizontalSplit;
+  QAction* _leftSplit;
+  QAction* _rightSplit;
+  QAction* _topSplit;
+  QAction* _bottomSplit;
+  QAction* _removeCurrent;
 };
 
 } // namespace IDE
