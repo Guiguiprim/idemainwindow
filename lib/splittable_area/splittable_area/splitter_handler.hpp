@@ -30,7 +30,7 @@ public:
   SplitterHandler(Qt::Orientation orientation, SplitterArea *splitterArea);
 
   Qt::Orientation orientation() const;
-  int thickness() const;
+  int thickness();
 
   bool movable() const;
   void setMovable(bool movable);
@@ -68,7 +68,6 @@ protected:
 private:
   QLinearGradient _gradient;
   Qt::Orientation _orientation;
-  int _thickness;
   bool _movable;
   int _pos;
 

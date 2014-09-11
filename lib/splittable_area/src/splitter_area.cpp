@@ -11,6 +11,8 @@ namespace IDE
 
 SplitterArea::SplitterArea(QWidget* parent)
   : QWidget(parent)
+  , _handlerThickness(3)
+  , _widgetMinimumSize(20)
   , _lastUsedSplitterWidget(NULL)
 {
   this->resize(400,400);
@@ -25,7 +27,7 @@ SplitterArea::SplitterArea(QWidget* parent)
   _topHandler->setHandler(IDE::LEFT, _leftHandler);
   _topHandler->setHandler(IDE::RIGHT, _rightHandler);
 
-  _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
+  _bottomHandler->setPos(this->height() - handlerThickness());
   _bottomHandler->setMovable(false);
   _bottomHandler->setHandler(IDE::LEFT, _leftHandler);
   _bottomHandler->setHandler(IDE::RIGHT, _rightHandler);
@@ -35,7 +37,7 @@ SplitterArea::SplitterArea(QWidget* parent)
   _leftHandler->setHandler(IDE::TOP, _topHandler);
   _leftHandler->setHandler(IDE::BOTTOM, _bottomHandler);
 
-  _rightHandler->setPos(this->width() - _rightHandler->thickness());
+  _rightHandler->setPos(this->width() - handlerThickness());
   _rightHandler->setMovable(false);
   _rightHandler->setHandler(IDE::TOP, _topHandler);
   _rightHandler->setHandler(IDE::BOTTOM, _bottomHandler);
@@ -46,6 +48,11 @@ SplitterArea::SplitterArea(QWidget* parent)
   widget->setHandler(IDE::BOTTOM, _bottomHandler);
   widget->setHandler(IDE::LEFT, _leftHandler);
   widget->setHandler(IDE::RIGHT, _rightHandler);
+}
+
+int SplitterArea::handlerThickness() const
+{
+  return _handlerThickness;
 }
 
 QByteArray SplitterArea::saveConfig() const
@@ -111,15 +118,15 @@ SplitterWidget* SplitterArea::splitterWidgetAt(int index) const
 SplitterWidget* SplitterArea::splitterWidgetAt(QPoint pos) const
 {
   // check that we won't hit the border
-  if(pos.x() < _leftHandler->thickness())
-    pos.setX(_leftHandler->thickness() + 1);
-  else if(pos.x() > this->width() - _rightHandler->thickness())
-    pos.setX(this->width() - _rightHandler->thickness() - 1);
+  if(pos.x() < handlerThickness())
+    pos.setX(handlerThickness() + 1);
+  else if(pos.x() > this->width() - handlerThickness())
+    pos.setX(this->width() - handlerThickness() - 1);
 
-  if(pos.y() < _topHandler->thickness())
-    pos.setY(_topHandler->thickness() + 1);
-  else if(pos.y() > this->height() - _bottomHandler->thickness())
-    pos.setY(this->height() - _bottomHandler->thickness() - 1);
+  if(pos.y() < handlerThickness())
+    pos.setY(handlerThickness() + 1);
+  else if(pos.y() > this->height() - handlerThickness())
+    pos.setY(this->height() - handlerThickness() - 1);
 
   QWidget* w = this->QWidget::childAt(pos);
   SplitterWidget* sw = dynamic_cast<SplitterWidget*>(w);
@@ -130,9 +137,9 @@ SplitterWidget* SplitterArea::splitterWidgetAt(QPoint pos) const
   if(sh) // we hit a handler let move a little bit
   {
     if(sh->orientation() == Qt::Vertical)
-      pos.setX(pos.x() - sh->thickness());
+      pos.setX(pos.x() - handlerThickness());
     else
-      pos.setY(pos.y() - sh->thickness());
+      pos.setY(pos.y() - handlerThickness());
 
     QWidget* w = this->QWidget::childAt(pos);
     SplitterWidget* sw = dynamic_cast<SplitterWidget*>(w);
@@ -396,8 +403,8 @@ void SplitterArea::resizeEvent(QResizeEvent* event)
     handler->setPos(handler->pos() * vFac);
   }
 
-  _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
-  _rightHandler->setPos(this->width() - _rightHandler->thickness());
+  _bottomHandler->setPos(this->height() - handlerThickness());
+  _rightHandler->setPos(this->width() - handlerThickness());
 }
 
 void SplitterArea::customEvent(QEvent* event)

@@ -21,6 +21,8 @@ class SplitterArea : public QWidget
 public:
   SplitterArea(QWidget *parent = NULL);
 
+  int handlerThickness() const;
+
   QByteArray saveConfig() const;
   bool loadConfig(QByteArray config);
 
@@ -85,6 +87,9 @@ private:
   virtual SplitterWidget* xCreateWidget() const;
 
 private:
+  int _handlerThickness;
+  int _widgetMinimumSize;
+
   SplitterHandler* _topHandler;
   SplitterHandler* _bottomHandler;
   SplitterHandler* _leftHandler;

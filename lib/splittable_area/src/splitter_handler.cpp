@@ -14,7 +14,6 @@ namespace IDE
 SplitterHandler::SplitterHandler(Qt::Orientation orientation, SplitterArea* splitterArea)
   : SplitterWidgetBase(splitterArea)
   , _orientation(orientation)
-  , _thickness(3)
   , _movable(true)
   , _pos(0)
   , _isBeingDrag(false)
@@ -26,7 +25,7 @@ SplitterHandler::SplitterHandler(Qt::Orientation orientation, SplitterArea* spli
   _gradient.setColorAt(0, QColor(200,200,200));
   _gradient.setColorAt(0.5, QColor(50,50,50));
   _gradient.setColorAt(1, QColor(200,200,200));
-  this->resize(_thickness, _thickness);
+  this->resize(thickness(), thickness());
 
   if(_movable)
   {
@@ -44,9 +43,9 @@ Qt::Orientation SplitterHandler::orientation() const
   return _orientation;
 }
 
-int SplitterHandler::thickness() const
+int SplitterHandler::thickness()
 {
-  return _thickness;
+  return _splitterArea->handlerThickness();
 }
 
 bool SplitterHandler::movable() const
@@ -136,7 +135,7 @@ void SplitterHandler::setPos(int pos)
       for(it = _handleWidgets.begin(); it != _handleWidgets.end(); ++it)
       {
         if(it.value() == IDE::TOP)
-          it.key()->setTopPos(_pos + _thickness);
+          it.key()->setTopPos(_pos + thickness());
         else if(it.value() == IDE::BOTTOM)
           it.key()->setBottomPos(_pos);
       }
@@ -148,7 +147,7 @@ void SplitterHandler::setPos(int pos)
       for(it = _handleWidgets.begin(); it != _handleWidgets.end(); ++it)
       {
         if(it.value() == IDE::LEFT)
-          it.key()->setLeftPos(_pos + _thickness);
+          it.key()->setLeftPos(_pos + thickness());
         else if(it.value() == IDE::RIGHT)
           it.key()->setRightPos(_pos);
       }
@@ -170,7 +169,7 @@ void SplitterHandler::addHandleWidget(SplitterSide side, SplitterWidgetBase* wid
               this, SLOT(xOnWidgetDestroy(QObject*)),
               Qt::UniqueConnection);
       if(side == IDE::TOP)
-        widget->setTopPos(_pos + _thickness);
+        widget->setTopPos(_pos + thickness());
       else if(side == IDE::BOTTOM)
         widget->setBottomPos(_pos);
     }
@@ -184,7 +183,7 @@ void SplitterHandler::addHandleWidget(SplitterSide side, SplitterWidgetBase* wid
               this, SLOT(xOnWidgetDestroy(QObject*)),
               Qt::UniqueConnection);
       if(side == IDE::LEFT)
-        widget->setLeftPos(_pos + _thickness);
+        widget->setLeftPos(_pos + thickness());
       else if(side == IDE::RIGHT)
         widget->setRightPos(_pos);
     }
