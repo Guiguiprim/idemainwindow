@@ -88,6 +88,42 @@ QVector<SplitterWidgetBase*> SplitterHandler::handleWidgetsBase(SplitterSide sid
   return result;
 }
 
+int SplitterHandler::maxWidgetNbrTo(SplitterHandler* handler) const
+{
+  if(handler == this)
+    return 0;
+
+  QVector<SplitterWidgetBase*> swbs;
+  SplitterSide otherSide;
+  if(this->orientation() == Qt::Vertical)
+  {
+    swbs = this->handleWidgetsBase(IDE::LEFT);
+    otherSide = IDE::RIGHT;
+  }
+  else
+  {
+    swbs = this->handleWidgetsBase(IDE::TOP);
+    otherSide = IDE::BOTTOM;
+  }
+
+  int max = -1;
+  Q_FOREACH(SplitterWidgetBase* swb, swbs)
+  {
+    SplitterWidget* sw = dynamic_cast<SplitterWidget*>(swb);
+    if(sw)
+    {
+      SplitterHandler* sh = sw->handler(otherSide);
+      if(sh)
+      {
+        int val = sh->maxWidgetNbrTo(handler);
+        if(val > -1 && val + 1 > max)
+          max = val + 1;
+      }
+    }
+  }
+  return max;
+}
+
 void SplitterHandler::setPos(int pos)
 {
   if(pos != _pos)

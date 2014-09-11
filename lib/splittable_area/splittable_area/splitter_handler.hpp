@@ -39,6 +39,8 @@ public:
 
   QVector<SplitterWidgetBase*> handleWidgetsBase(SplitterSide side) const;
 
+  int maxWidgetNbrTo(SplitterHandler* handler) const;
+
 public Q_SLOTS:
   void setPos(int pos);
   /**
