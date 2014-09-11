@@ -2,16 +2,19 @@
 
 #include <QAction>
 #include <QToolBar>
+#include <QLabel>
 
 #include <splittable_area/splitter_area.hpp>
+#include <splittable_area/splitter_widget.hpp>
 
 namespace IDE
 {
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
+  , _i(0)
 {
-  _splittableArea = new SplitterArea(this);
+  _splittableArea = new SplitterArea;
   this->setCentralWidget(_splittableArea);
 
   QToolBar* toolBar = this->addToolBar("");
@@ -31,41 +34,54 @@ void MainWindow::onVerticalSplit()
 {
   int i = _splittableArea->indexLastUsedWidet();
   if(i != -1)
-    _splittableArea->addWidget(NULL, i, Qt::Vertical);
+  {
+    if(_splittableArea->addWidget(new QLabel("truc"), 0, Qt::Vertical))
+     ++_i;
+  }
 }
 
 void MainWindow::onHorizontalSplit()
 {
   int i = _splittableArea->indexLastUsedWidet();
   if(i != -1)
-    _splittableArea->addWidget(NULL, i, Qt::Horizontal);
+  {
+    _splittableArea->addWidget(new QLabel("truc"), 0, Qt::Horizontal);
+    ++_i;
+  }
 }
 
 void MainWindow::onLeftSplit()
 {
-  _splittableArea->sideSplit(IDE::LEFT, 0.2f);
+  _splittableArea->sideSplit(IDE::LEFT, 0.2f)->setColor("blue");
+  ++_i;
 }
 
 void MainWindow::onRightSplit()
 {
   _splittableArea->sideSplit(IDE::RIGHT, 0.2f);
+  ++_i;
 }
 
 void MainWindow::onTopSplit()
 {
   _splittableArea->sideSplit(IDE::TOP, 0.2f);
+  ++_i;
 }
 
 void MainWindow::onBottomSplit()
 {
   _splittableArea->sideSplit(IDE::BOTTOM, 0.2f);
+  ++_i;
 }
 
 void MainWindow::onRemoveCurrent()
 {
   int i = _splittableArea->indexLastUsedWidet();
   if(i != -1)
+  {
     _splittableArea->remove(i);
+    --_i;
+  }
 }
 
 } // namespace IDE

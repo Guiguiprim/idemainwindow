@@ -23,6 +23,7 @@ private Q_SLOTS:
   void onRemoveCurrent();
 
 private:
+  int _i;
   SplitterArea* _splittableArea;
 
   QAction* _verticalSplit;
