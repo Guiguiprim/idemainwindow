@@ -437,6 +437,35 @@ int SplitterArea::xHorizontalHandlerIndex(SplitterHandler* handler) const
   return -1;
 }
 
+SplitterHandler* SplitterArea::xVerticalHandler(int index) const
+{
+  if(index == 0)
+    return _leftHandler;
+
+  if(index == 1)
+    return _rightHandler;
+
+  index -= 2;
+  if(index < 0 || index >= _verticalHandlers.size())
+    return NULL;
+
+  return _verticalHandlers.at(index);
+}
+
+SplitterHandler* SplitterArea::xHorizontalHandler(int index) const
+{
+  if(index == 0)
+    return _topHandler;
+
+  if(index == 1)
+    return _bottomHandler;
+
+  index -= 2;
+  if(index < 0 || index >= _horizontalHandlers.size())
+    return NULL;
+
+  return _horizontalHandlers.at(index);
+}
 
 SplitterHandler* SplitterArea::xCreateHandler(Qt::Orientation orientation) const
 {

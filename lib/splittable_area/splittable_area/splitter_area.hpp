@@ -76,6 +76,8 @@ private:
    */
   int xVerticalHandlerIndex(SplitterHandler* handler) const;
   int xHorizontalHandlerIndex(SplitterHandler* handler) const;
+  SplitterHandler* xVerticalHandler(int index) const;
+  SplitterHandler* xHorizontalHandler(int index) const;
 
   virtual SplitterHandler* xCreateHandler(Qt::Orientation orientation) const;
   virtual SplitterWidget* xCreateWidget() const;
