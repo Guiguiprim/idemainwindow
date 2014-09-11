@@ -27,6 +27,15 @@ MainWindow::MainWindow(QWidget *parent)
   _bottomSplit = toolBar->addAction("bottom split", this, SLOT(onBottomSplit()));
   _removeCurrent = toolBar->addAction("remove", this, SLOT(onRemoveCurrent()));
 
+//  SplitterWidget* widget = _splittableArea->sideSplit(IDE::TOP, 0.2f);
+//  widget->setColor("blue");
+//  widget = _splittableArea->sideSplit(IDE::BOTTOM, 0.2f);
+//  widget->setColor("green");
+//  widget = _splittableArea->sideSplit(IDE::LEFT, 0.2f);
+//  widget->setColor("orange");
+//  widget = _splittableArea->sideSplit(IDE::RIGHT, 0.2f);
+//  widget->setColor("yellow");
+
   this->resize(450,450);
 }
 
