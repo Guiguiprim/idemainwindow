@@ -21,14 +21,14 @@ SplitterWidget::SplitterWidget(SplitterArea* splitterArea)
   QVBoxLayout* lyt = new QVBoxLayout(this);
   lyt->setMargin(0);
   lyt->addWidget(_srcollArea);
-  _srcollArea->setStyleSheet("background:red");
+  //_srcollArea->setStyleSheet("background:red");
 
   new WidgetFocusWatcher(this, splitterArea);
 }
 
 void SplitterWidget::setColor(const QString& color)
 {
-  _srcollArea->setStyleSheet("background:" + color);
+  //_srcollArea->setStyleSheet("background:" + color);
 }
 
 void SplitterWidget::setWidget(QWidget* widget)
