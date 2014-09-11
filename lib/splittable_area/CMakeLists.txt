@@ -14,6 +14,7 @@ set(
   "splittable_area/splitter_handler.hpp"
   "splittable_area/splitter_widget.hpp"
   "splittable_area/splitter_widget_base.hpp"
+  "splittable_area/widget_focus_watcher.hpp"
 )
 
 set(
@@ -22,6 +23,7 @@ set(
   "src/splitter_handler.cpp"
   "src/splitter_widget.cpp"
   "src/splitter_widget_base.cpp"
+  "src/widget_focus_watcher.cpp"
 )
 
 set(

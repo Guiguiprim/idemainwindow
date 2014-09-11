@@ -7,6 +7,8 @@
 
 #include <splittable_area/splitter_area.hpp>
 
+#include <splittable_area/widget_focus_watcher.hpp>
+
 namespace IDE
 {
 
@@ -20,6 +22,8 @@ SplitterWidget::SplitterWidget(SplitterArea* splitterArea)
   lyt->setMargin(0);
   lyt->addWidget(_srcollArea);
   _srcollArea->setStyleSheet("background:red");
+
+  new WidgetFocusWatcher(this, splitterArea);
 }
 
 void SplitterWidget::setColor(const QString& color)

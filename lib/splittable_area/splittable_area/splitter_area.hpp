@@ -62,6 +62,7 @@ public:
 
 protected:
   virtual void resizeEvent(QResizeEvent* event);
+  virtual void customEvent(QEvent* event);
 
 private:
   bool xIsBorder(SplitterWidgetBase* swb) const;
@@ -92,6 +93,8 @@ private:
   QList<SplitterHandler*> _verticalHandlers;
   QList<SplitterHandler*> _horizontalHandlers;
   QList<SplitterWidget*> _splitterWidgets;
+
+  SplitterWidget* _lastUsedSplitterWidget;
 };
 
 } // namespace IDE

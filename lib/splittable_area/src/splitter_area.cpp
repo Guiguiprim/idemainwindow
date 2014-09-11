@@ -4,12 +4,14 @@
 
 #include <splittable_area/splitter_handler.hpp>
 #include <splittable_area/splitter_widget.hpp>
+#include <splittable_area/widget_focus_watcher.hpp>
 
 namespace IDE
 {
 
 SplitterArea::SplitterArea(QWidget* parent)
   : QWidget(parent)
+  , _lastUsedSplitterWidget(NULL)
 {
   this->resize(400,400);
 
@@ -396,6 +398,16 @@ void SplitterArea::resizeEvent(QResizeEvent* event)
 
   _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
   _rightHandler->setPos(this->width() - _rightHandler->thickness());
+}
+
+void SplitterArea::customEvent(QEvent* event)
+{
+  if(event->type() == WidgetFocusEvent::type())
+  {
+    WidgetFocusEvent* wfe = static_cast<WidgetFocusEvent*>(event);
+    _lastUsedSplitterWidget = dynamic_cast<SplitterWidget*>(wfe->widget());
+    event->accept();
+  }
 }
 
 bool SplitterArea::xIsBorder(SplitterWidgetBase* swb) const
