@@ -258,14 +258,15 @@ SplitterWidget* SplitterArea::sideSplit(
     newHandler = xCreateHandler(Qt::Horizontal);
     newHandler->setHandler(IDE::LEFT, leftHandler);
     newHandler->setHandler(IDE::RIGHT, rightHandler);
+    _horizontalHandlers.append(newHandler);
   }
   else
   {
     newHandler = xCreateHandler(Qt::Vertical);
     newHandler->setHandler(IDE::TOP, topHandler);
     newHandler->setHandler(IDE::BOTTOM, bottomHandler);
+    _verticalHandlers.append(newHandler);
   }
-  _horizontalHandlers.append(newHandler);
 
   SplitterHandler* handler = NULL;
   int newPos = 0;

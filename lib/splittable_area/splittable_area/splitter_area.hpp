@@ -40,7 +40,8 @@ public:
       int index,
       float proportion = 0.5f);
 
-  SplitterWidget* sideSplit(SplitterSide side,
+  SplitterWidget* sideSplit(
+      SplitterSide side,
       float proportion = 0.5f);
 
   bool addWidget(
