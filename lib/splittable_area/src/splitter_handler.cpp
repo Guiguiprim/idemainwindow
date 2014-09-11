@@ -271,9 +271,6 @@ void SplitterHandler::mouseMoveEvent(QMouseEvent* event)
 {
   if(_isBeingDrag)
   {
-    //@TODO : Handle move limitation:
-    // should be block by other handler (+ min spacing)
-    // => splitter area should compute minimum size
     int to;
     int min = 0;
     int max;
