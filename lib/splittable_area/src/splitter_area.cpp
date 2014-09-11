@@ -58,6 +58,16 @@ int SplitterArea::handlerThickness() const
   return _handlerThickness;
 }
 
+int SplitterArea::widgetMinimumSize() const
+{
+  return _widgetMinimumSize;
+}
+
+int SplitterArea::count() const
+{
+  return _splitterWidgets.count();
+}
+
 QByteArray SplitterArea::saveConfig() const
 {
   return QByteArray();
@@ -333,6 +343,9 @@ bool SplitterArea::addWidget(
     Qt::Orientation orientation,
     float proportion)
 {
+  if(index == -1)
+    index = count() - 1;
+
   if(index < 0 || index >= _splitterWidgets.size())
     return false; // invalide index
 
@@ -353,8 +366,8 @@ bool SplitterArea::addWidget(
 }
 
 bool SplitterArea::insertWidget(
-    QWidget* widget,
     int index,
+    QWidget* widget,
     Qt::Orientation orientation,
     float proportion)
 {
@@ -450,6 +463,10 @@ bool SplitterArea::remove(int index)
       _splitterWidgets.removeOne(sw);
 
       delete removableHandler;
+
+      if(_lastUsedSplitterWidget == sw)
+        _lastUsedSplitterWidget = NULL;
+
       delete sw;
 
       xRecomputeMinimumSize();
@@ -458,6 +475,12 @@ bool SplitterArea::remove(int index)
   }
 
   return false; // no removable handler found weird ...
+}
+
+
+int SplitterArea::indexLastUsedWidet() const
+{
+  return indexOfSplitterWidget(_lastUsedSplitterWidget);
 }
 
 void SplitterArea::resizeEvent(QResizeEvent* event)
