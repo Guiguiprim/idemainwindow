@@ -275,11 +275,55 @@ void SplitterHandler::mouseMoveEvent(QMouseEvent* event)
     // should be block by other handler (+ min spacing)
     // => splitter area should compute minimum size
     int to;
+    int min = 0;
+    int max;
     if(_orientation == Qt::Horizontal)
+    {
       to = _splitterArea->mapFromGlobal(event->globalPos()).y();
+      int maxTop = 0;
+      int minBottom = _splitterArea->height();
+      QMap<SplitterWidgetBase*, SplitterSide>::const_iterator it;
+      for(it = _handleWidgets.begin(); it != _handleWidgets.end(); ++it)
+      {
+        if(it.value() == IDE::BOTTOM)
+        {
+          if(it.key()->pos().y() > maxTop)
+            maxTop = it.key()->pos().y();
+        }
+        else if(it.value() == IDE::TOP)
+        {
+          if(it.key()->pos().y() + it.key()->height() < minBottom)
+            minBottom = it.key()->pos().y() + it.key()->height();
+        }
+      }
+      min = maxTop + _splitterArea->widgetMinimumSize();
+      max = minBottom - _splitterArea->widgetMinimumSize();
+    }
     else
+    {
+      int maxLeft = 0;
+      int minRight = _splitterArea->width();
+      QMap<SplitterWidgetBase*, SplitterSide>::const_iterator it;
+      for(it = _handleWidgets.begin(); it != _handleWidgets.end(); ++it)
+      {
+        if(it.value() == IDE::RIGHT)
+        {
+          if(it.key()->pos().x() > maxLeft)
+            maxLeft = it.key()->pos().x();
+        }
+        else if(it.value() == IDE::LEFT)
+        {
+          if(it.key()->pos().x() + it.key()->width() < minRight)
+            minRight = it.key()->pos().x() + it.key()->width();
+        }
+      }
+      min = maxLeft + _splitterArea->widgetMinimumSize();
+      max = minRight - _splitterArea->widgetMinimumSize();
       to = _splitterArea->mapFromGlobal(event->globalPos()).x();
-    this->setPos(to);
+    }
+
+    if(to > min && to < max)
+      this->setPos(to);
 
     event->accept();
   }
