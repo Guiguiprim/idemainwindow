@@ -76,6 +76,18 @@ int SplitterHandler::pos() const
   return _pos;
 }
 
+QVector<SplitterWidgetBase*> SplitterHandler::handleWidgetsBase(SplitterSide side) const
+{
+  QVector<SplitterWidgetBase*> result;
+  QMap<SplitterWidgetBase*, SplitterSide>::const_iterator it;
+  for(it = _handleWidgets.begin(); it != _handleWidgets.end(); ++it)
+  {
+    if(it.value() == side)
+      result.append(it.key());
+  }
+  return result;
+}
+
 void SplitterHandler::setPos(int pos)
 {
   if(pos != _pos)

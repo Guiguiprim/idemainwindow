@@ -5,6 +5,7 @@
 
 #include <QLinearGradient>
 #include <QMap>
+#include <QVector>
 
 namespace IDE
 {
@@ -35,6 +36,8 @@ public:
   void setMovable(bool movable);
 
   int pos() const;
+
+  QVector<SplitterWidgetBase*> handleWidgetsBase(SplitterSide side) const;
 
 public Q_SLOTS:
   void setPos(int pos);
