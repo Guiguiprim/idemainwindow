@@ -90,6 +90,8 @@ private:
   virtual SplitterHandler* xCreateHandler(Qt::Orientation orientation) const;
   virtual SplitterWidget* xCreateWidget() const;
 
+  void xRecomputeMinimumSize();
+
 private:
   int _handlerThickness;
   int _widgetMinimumSize;

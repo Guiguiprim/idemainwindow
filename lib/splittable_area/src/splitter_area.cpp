@@ -13,7 +13,7 @@ typedef QPair<SplitterSide,SplitterSide> DirPair;
 SplitterArea::SplitterArea(QWidget* parent)
   : QWidget(parent)
   , _handlerThickness(3)
-  , _widgetMinimumSize(20)
+  , _widgetMinimumSize(40)
   , _lastUsedSplitterWidget(NULL)
 {
   this->resize(400,400);
@@ -49,6 +49,8 @@ SplitterArea::SplitterArea(QWidget* parent)
   widget->setHandler(IDE::BOTTOM, _bottomHandler);
   widget->setHandler(IDE::LEFT, _leftHandler);
   widget->setHandler(IDE::RIGHT, _rightHandler);
+
+  xRecomputeMinimumSize();
 }
 
 int SplitterArea::handlerThickness() const
@@ -185,6 +187,7 @@ SplitterWidget* SplitterArea::verticalSplit(
   nsw->setHandler(IDE::LEFT, newHandler);
   nsw->setHandler(IDE::RIGHT, rightHandler);
 
+  xRecomputeMinimumSize();
   return nsw;
 }
 
@@ -222,6 +225,7 @@ SplitterWidget* SplitterArea::horizontalSplit(
   nsw->setHandler(IDE::LEFT, leftHandler);
   nsw->setHandler(IDE::RIGHT, rightHandler);
 
+  xRecomputeMinimumSize();
   return nsw;
 }
 
@@ -319,6 +323,7 @@ SplitterWidget* SplitterArea::sideSplit(
   nsw->setHandler(IDE::RIGHT, rightHandler);
   _splitterWidgets.append(nsw);
 
+  xRecomputeMinimumSize();
   return nsw;
 }
 
@@ -446,6 +451,8 @@ bool SplitterArea::remove(int index)
 
       delete removableHandler;
       delete sw;
+
+      xRecomputeMinimumSize();
       return true;
     }
   }
@@ -563,6 +570,15 @@ SplitterHandler* SplitterArea::xCreateHandler(Qt::Orientation orientation) const
 SplitterWidget* SplitterArea::xCreateWidget() const
 {
   return new SplitterWidget(const_cast<SplitterArea*>(this));
+}
+
+void SplitterArea::xRecomputeMinimumSize()
+{
+  int widthCount = _leftHandler->maxWidgetNbrTo(_rightHandler);
+  int minWidth = widthCount * _widgetMinimumSize + (widthCount+1) * _handlerThickness;
+  int heightCount = _topHandler->maxWidgetNbrTo(_bottomHandler);
+  int minHeight = heightCount * _widgetMinimumSize + (heightCount+1) * _handlerThickness;
+  this->setMinimumSize(minWidth, minHeight);
 }
 
 } // namespace IDE
