@@ -8,6 +8,7 @@
 
 namespace IDE
 {
+typedef QPair<SplitterSide,SplitterSide> DirPair;
 
 SplitterArea::SplitterArea(QWidget* parent)
   : QWidget(parent)
@@ -383,6 +384,73 @@ bool SplitterArea::setWidgetAt(
   SplitterWidget* sw = _splitterWidgets.at(index);
   sw->setWidget(widget);
   return true;
+}
+
+bool SplitterArea::removeWidget(QWidget* widget)
+{
+  return remove(indexOf(widget));
+}
+
+bool SplitterArea::removeSplitterWidget(SplitterWidget* splitterWidget)
+{
+  return remove(indexOfSplitterWidget(splitterWidget));
+}
+
+bool SplitterArea::remove(int index)
+{
+  if(index < 0 || index >= _splitterWidgets.size())
+    return false; // invalide index
+
+  if(index == 0 && _splitterWidgets.size() == 1)
+  {
+    delete _splitterWidgets.first()->takeWidget();
+    return true; // last widget so we just remove the widget and not the splitter widget
+  }
+
+  SplitterWidget* sw = _splitterWidgets.at(index);
+
+  QVector<DirPair> removeDir;
+  removeDir.append(DirPair(IDE::TOP, IDE::BOTTOM) );
+  removeDir.append(DirPair(IDE::LEFT, IDE::RIGHT) );
+  removeDir.append(DirPair(IDE::BOTTOM, IDE::TOP ) );
+  removeDir.append(DirPair(IDE::RIGHT, IDE::LEFT ) );
+
+  Q_FOREACH(DirPair dir, removeDir)
+  {
+    SplitterHandler* removableHandler = NULL;
+    SplitterHandler* oppositeHandler = NULL;
+
+    removableHandler = sw->handler(dir.first);
+    if(removableHandler &&
+       !xIsBorder(removableHandler) &&
+       removableHandler->handleWidgetsBase(dir.first).size() == 1)
+    {
+      oppositeHandler = sw->handler(dir.second);
+      if(oppositeHandler &&
+         !xIsBorder(oppositeHandler) &&
+         oppositeHandler->handleWidgetsBase(dir.second).size() == 1)
+      {
+        int newPos = (oppositeHandler->pos() - removableHandler->pos()) / 2;
+        oppositeHandler->setPos(newPos);
+      }
+
+      QVector<SplitterWidgetBase*> handleWidgets = removableHandler->handleWidgetsBase(dir.second);
+      Q_FOREACH(SplitterWidgetBase* swb, handleWidgets)
+      {
+        swb->setHandler(dir.second, oppositeHandler);
+      }
+
+      _verticalHandlers.removeOne(removableHandler);
+      _horizontalHandlers.removeOne(removableHandler);
+      _splitterWidgets.removeOne(sw);
+
+      delete removableHandler;
+      delete sw;
+      return true;
+    }
+  }
+
+  return false; // no removable handler found weird ...
 }
 
 void SplitterArea::resizeEvent(QResizeEvent* event)

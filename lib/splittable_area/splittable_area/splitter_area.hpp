@@ -62,6 +62,10 @@ public:
       QWidget* widget,
       int index);
 
+  bool removeWidget(QWidget* widget);
+  bool removeSplitterWidget(SplitterWidget* splitterWidget);
+  bool remove(int index);
+
 protected:
   virtual void resizeEvent(QResizeEvent* event);
   virtual void customEvent(QEvent* event);
