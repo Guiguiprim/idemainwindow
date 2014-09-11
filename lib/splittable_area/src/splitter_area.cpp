@@ -78,23 +78,67 @@ int SplitterArea::indexOfSplitterWidget(SplitterWidget* splitterWidget) const
 
 int SplitterArea::indexAt(QPoint pos) const
 {
-
+  SplitterWidget* sw = splitterWidgetAt(pos);
+  return _splitterWidgets.indexOf(sw);
 }
+
 QWidget* SplitterArea::widgetAt(int index) const
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return NULL; // invalide index
 
+  return _splitterWidgets.at(index)->widget();
 }
+
 QWidget* SplitterArea::widgetAt(QPoint pos) const
 {
-
+  SplitterWidget* sw = splitterWidgetAt(pos);
+  if(sw)
+    return sw->widget();
+  return NULL;
 }
+
 SplitterWidget* SplitterArea::splitterWidgetAt(int index) const
 {
+  if(index < 0 || index >= _splitterWidgets.size())
+    return NULL; // invalide index
 
+  return _splitterWidgets.at(index);
 }
+
 SplitterWidget* SplitterArea::splitterWidgetAt(QPoint pos) const
 {
+  // check that we won't hit the border
+  if(pos.x() < _leftHandler->thickness())
+    pos.setX(_leftHandler->thickness() + 1);
+  else if(pos.x() > this->width() - _rightHandler->thickness())
+    pos.setX(this->width() - _rightHandler->thickness() - 1);
 
+  if(pos.y() < _topHandler->thickness())
+    pos.setY(_topHandler->thickness() + 1);
+  else if(pos.y() > this->height() - _bottomHandler->thickness())
+    pos.setY(this->height() - _bottomHandler->thickness() - 1);
+
+  QWidget* w = this->QWidget::childAt(pos);
+  SplitterWidget* sw = dynamic_cast<SplitterWidget*>(w);
+  if(sw)
+    return sw;
+
+  SplitterHandler* sh = dynamic_cast<SplitterHandler*>(w);
+  if(sh) // we hit a handler let move a little bit
+  {
+    if(sh->orientation() == Qt::Vertical)
+      pos.setX(pos.x() - sh->thickness());
+    else
+      pos.setY(pos.y() - sh->thickness());
+
+    QWidget* w = this->QWidget::childAt(pos);
+    SplitterWidget* sw = dynamic_cast<SplitterWidget*>(w);
+    if(sw)
+      return sw;
+  }
+
+  return NULL; // should never append
 }
 
 SplitterWidget* SplitterArea::verticalSplit(
