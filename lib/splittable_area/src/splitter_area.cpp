@@ -16,7 +16,7 @@ SplitterArea::SplitterArea(QWidget* parent)
   , _widgetMinimumSize(40)
   , _lastUsedSplitterWidget(NULL)
 {
-  this->resize(400,400);
+  //this->resize(400,400);
 
   _topHandler = xCreateHandler(Qt::Horizontal);
   _bottomHandler = xCreateHandler(Qt::Horizontal);
