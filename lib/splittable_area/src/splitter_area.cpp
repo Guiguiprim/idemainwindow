@@ -13,10 +13,10 @@ SplitterArea::SplitterArea(QWidget* parent)
 {
   this->resize(400,400);
 
-  _topHandler = new SplitterHandler(Qt::Horizontal, this);
-  _bottomHandler = new SplitterHandler(Qt::Horizontal, this);
-  _leftHandler = new SplitterHandler(Qt::Vertical, this);
-  _rightHandler = new SplitterHandler(Qt::Vertical, this);
+  _topHandler = xCreateHandler(Qt::Horizontal);
+  _bottomHandler = xCreateHandler(Qt::Horizontal);
+  _leftHandler = xCreateHandler(Qt::Vertical);
+  _rightHandler = xCreateHandler(Qt::Vertical);
 
   _topHandler->setPos(0);
   _topHandler->setMovable(false);
@@ -38,7 +38,7 @@ SplitterArea::SplitterArea(QWidget* parent)
   _rightHandler->setHandler(IDE::TOP, _topHandler);
   _rightHandler->setHandler(IDE::BOTTOM, _bottomHandler);
 
-  SplitterWidget* widget = new SplitterWidget(this);
+  SplitterWidget* widget = xCreateWidget();
   _splitterWidgets.append(widget);
   widget->setHandler(IDE::TOP, _topHandler);
   widget->setHandler(IDE::BOTTOM, _bottomHandler);
@@ -113,7 +113,7 @@ SplitterWidget* SplitterArea::verticalSplit(
   SplitterHandler* leftHandler = sw->handler(IDE::LEFT);
   SplitterHandler* rightHandler = sw->handler(IDE::RIGHT);
 
-  SplitterHandler* newHandler = new SplitterHandler(Qt::Vertical, this);
+  SplitterHandler* newHandler = xCreateHandler(Qt::Vertical);
   _verticalHandlers.append(newHandler);
   newHandler->setHandler(IDE::TOP, topHandler);
   newHandler->setHandler(IDE::BOTTOM, bottomHandler);
@@ -124,7 +124,7 @@ SplitterWidget* SplitterArea::verticalSplit(
 
   sw->setHandler(IDE::RIGHT, newHandler);
 
-  SplitterWidget* nsw = new SplitterWidget(this);
+  SplitterWidget* nsw = xCreateWidget();
   _splitterWidgets.append(nsw);
   nsw->setHandler(IDE::TOP, topHandler);
   nsw->setHandler(IDE::BOTTOM, bottomHandler);
@@ -150,7 +150,7 @@ SplitterWidget* SplitterArea::horizontalSplit(
   SplitterHandler* leftHandler = sw->handler(IDE::LEFT);
   SplitterHandler* rightHandler = sw->handler(IDE::RIGHT);
 
-  SplitterHandler* newHandler = new SplitterHandler(Qt::Horizontal, this);
+  SplitterHandler* newHandler = xCreateHandler(Qt::Horizontal);
   _horizontalHandlers.append(newHandler);
   newHandler->setHandler(IDE::LEFT, leftHandler);
   newHandler->setHandler(IDE::RIGHT, rightHandler);
@@ -161,7 +161,7 @@ SplitterWidget* SplitterArea::horizontalSplit(
 
   sw->setHandler(IDE::BOTTOM, newHandler);
 
-  SplitterWidget* nsw = new SplitterWidget(this);
+  SplitterWidget* nsw = xCreateWidget();
   _splitterWidgets.append(nsw);
   nsw->setHandler(IDE::TOP, newHandler);
   nsw->setHandler(IDE::BOTTOM, bottomHandler);
@@ -285,6 +285,17 @@ int SplitterArea::xHorizontalHandlerIndex(SplitterHandler* handler) const
     return i + 2;
 
   return -1;
+}
+
+
+SplitterHandler* SplitterArea::xCreateHandler(Qt::Orientation orientation) const
+{
+  return new SplitterHandler(orientation, const_cast<SplitterArea*>(this));
+}
+
+SplitterWidget* SplitterArea::xCreateWidget() const
+{
+  return new SplitterWidget(const_cast<SplitterArea*>(this));
 }
 
 } // namespace IDE
