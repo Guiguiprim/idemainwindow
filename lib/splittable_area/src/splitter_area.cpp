@@ -380,17 +380,17 @@ void SplitterArea::resizeEvent(QResizeEvent* event)
   if(!this->isVisible())
     return;
 
-  float vFac = this->height() / event->oldSize().height();
-  float hFac = this->width() / event->oldSize().width();
+  qreal vFac = (qreal)this->height() / (qreal)event->oldSize().height();
+  qreal hFac = (qreal)this->width() / (qreal)event->oldSize().width();
 
   Q_FOREACH(SplitterHandler* handler, _verticalHandlers)
   {
-    handler->setPos(handler->pos() * vFac);
+    handler->setPos(handler->pos() * hFac);
   }
 
   Q_FOREACH(SplitterHandler* handler, _horizontalHandlers)
   {
-    handler->setPos(handler->pos() * hFac);
+    handler->setPos(handler->pos() * vFac);
   }
 
   _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
