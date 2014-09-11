@@ -215,6 +215,102 @@ SplitterWidget* SplitterArea::horizontalSplit(
   return nsw;
 }
 
+SplitterWidget* SplitterArea::sideSplit(
+    SplitterSide side,
+    float p)
+{
+  if(0 >= p || 1 <= p)
+    return NULL; // invalide proportion
+
+  SplitterHandler* topHandler = _topHandler;
+  SplitterHandler* bottomHandler = _bottomHandler;
+  SplitterHandler* leftHandler = _leftHandler;
+  SplitterHandler* rightHandler = _rightHandler;
+
+  if(side == IDE::TOP || side == IDE::BOTTOM)
+  {
+    Q_FOREACH(SplitterHandler* handler, _horizontalHandlers)
+    {
+      qreal xp = (qreal)handler->pos() / (qreal)this->height();
+      qreal Xp = xp * (1-p);
+      if(side == IDE::TOP)
+        Xp += p;
+      int newPos = this->height() * Xp;
+      handler->setPos(newPos);
+    }
+  }
+  else
+  {
+    Q_FOREACH(SplitterHandler* handler, _verticalHandlers)
+    {
+      qreal xp = (qreal)handler->pos() / (qreal)this->width();
+      qreal Xp = xp * (1-p);
+      if(side == IDE::LEFT)
+        Xp += p;
+      int newPos = this->width() * Xp;
+      handler->setPos(newPos);
+    }
+  }
+
+  SplitterHandler* newHandler = NULL;
+  if(side == IDE::TOP || side == IDE::BOTTOM)
+  {
+    newHandler = xCreateHandler(Qt::Horizontal);
+    newHandler->setHandler(IDE::LEFT, leftHandler);
+    newHandler->setHandler(IDE::RIGHT, rightHandler);
+  }
+  else
+  {
+    newHandler = xCreateHandler(Qt::Vertical);
+    newHandler->setHandler(IDE::TOP, topHandler);
+    newHandler->setHandler(IDE::BOTTOM, bottomHandler);
+  }
+  _horizontalHandlers.append(newHandler);
+
+  SplitterHandler* handler = NULL;
+  int newPos = 0;
+  switch(side)
+  {
+  case IDE::TOP:
+    handler = topHandler;
+    newPos = this->height() * p;
+    bottomHandler = newHandler;
+    break;
+  case IDE::BOTTOM:
+    handler = bottomHandler;
+    newPos = this->height() * (1-p);
+    topHandler = newHandler;
+    break;
+  case IDE::LEFT:
+    handler = leftHandler;
+    newPos = this->width() * p;
+    rightHandler = newHandler;
+    break;
+  case IDE::RIGHT:
+    handler = rightHandler;
+    newPos = this->width() * (1-p);
+    leftHandler = newHandler;
+    break;
+  }
+  newHandler->setPos(newPos);
+
+  QVector<SplitterWidgetBase*> handleWidgets = handler->handleWidgetsBase(side);
+  Q_FOREACH(SplitterWidgetBase* swb, handleWidgets)
+  {
+    if(!xIsBorder(swb))
+      swb->setHandler(side, newHandler);
+  }
+
+  SplitterWidget* nsw = xCreateWidget();
+  nsw->setHandler(IDE::TOP, topHandler);
+  nsw->setHandler(IDE::BOTTOM, bottomHandler);
+  nsw->setHandler(IDE::LEFT, leftHandler);
+  nsw->setHandler(IDE::RIGHT, rightHandler);
+  _splitterWidgets.append(nsw);
+
+  return nsw;
+}
+
 bool SplitterArea::addWidget(
     QWidget* widget,
     int index,
@@ -299,6 +395,16 @@ void SplitterArea::resizeEvent(QResizeEvent* event)
 
   _bottomHandler->setPos(this->height() - _bottomHandler->thickness());
   _rightHandler->setPos(this->width() - _rightHandler->thickness());
+}
+
+bool SplitterArea::xIsBorder(SplitterWidgetBase* swb) const
+{
+  if(swb == (SplitterWidgetBase*)_topHandler ||
+     swb == (SplitterWidgetBase*)_bottomHandler ||
+     swb == (SplitterWidgetBase*)_leftHandler ||
+     swb == (SplitterWidgetBase*)_rightHandler)
+    return true;
+  return false;
 }
 
 int SplitterArea::xVerticalHandlerIndex(SplitterHandler* handler) const

@@ -5,12 +5,15 @@
 
 #include <QList>
 
+#include <splittable_area/splitter_enum.hpp>
+
 // inspiration http://qt-project.org/wiki/Widget-moveable-and-resizeable ??
 
 namespace IDE
 {
 class SplitterHandler;
 class SplitterWidget;
+class SplitterWidgetBase;
 
 class SplitterArea : public QWidget
 {
@@ -32,8 +35,12 @@ public:
   SplitterWidget* verticalSplit(
       int index,
       float proportion = 0.5f);
+
   SplitterWidget* horizontalSplit(
       int index,
+      float proportion = 0.5f);
+
+  SplitterWidget* sideSplit(SplitterSide side,
       float proportion = 0.5f);
 
   bool addWidget(
@@ -56,6 +63,8 @@ protected:
   virtual void resizeEvent(QResizeEvent* event);
 
 private:
+  bool xIsBorder(SplitterWidgetBase* swb) const;
+
   /**
    * @brief xVerticalHandlerIndex
    * @param handler: Handler which index we want
